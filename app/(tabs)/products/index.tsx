@@ -118,15 +118,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProductList;
-
-export const navigationOptions = {
-  headerShown: false,
-  title: "Products",
-  tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => (
-    <Ionicons
-      name={focused ? "storefront" : "storefront-outline"}
-      color={color}
-      size={24}
-    />
-  ),
-};

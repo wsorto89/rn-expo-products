@@ -43,24 +43,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="products/index"
-        // options={{
-        //   headerShown: true,
-        //   title: "Products",
-        //   tabBarIcon: ({
-        //     color,
-        //     focused,
-        //   }: {
-        //     color: string;
-        //     focused: boolean;
-        //   }) => (
-        //     <Ionicons
-        //       name={focused ? "storefront" : "storefront-outline"}
-        //       color={color}
-        //       size={24}
-        //     />
-        //   ),
-        // }}
+        name="products"
+        options={{
+          headerShown: false,
+          title: "Products",
+          tabBarIcon: ({
+            color,
+            focused,
+          }: {
+            color: string;
+            focused: boolean;
+          }) => (
+            <Ionicons
+              name={focused ? "storefront" : "storefront-outline"}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
       />
     </Tabs>
   );

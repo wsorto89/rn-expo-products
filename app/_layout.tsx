@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/colors";
+import { ProductProvider } from "@/context/product-context";
 
 /**
  * This is the root layout for the app.
@@ -12,10 +13,12 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.app}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
+        <ProductProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </ProductProvider>
       </SafeAreaView>
     </SafeAreaProvider>
   );

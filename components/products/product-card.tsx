@@ -1,4 +1,4 @@
-import { useRouter, useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
 import { Image, StyleSheet, Text, View } from "react-native";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
@@ -12,13 +12,11 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
-  const navigation = useNavigation();
   const { setSelectedProduct } = useProductContext();
 
   const handleMoreDetailsPress = () => {
     setSelectedProduct(product);
-    //router.push(`/products/${product.id}`);
-    navigation.navigate("products/[id]", { id: product.id, screen: "products" });
+    router.push(`/products/${product.id}`);
   };
 
   return (
