@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Stack, Tabs, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/colors";
 
@@ -7,6 +7,7 @@ import { Colors } from "@/constants/colors";
  * It uses the Tabs component from expo-router to create a tabbed navigation layout.
  */
 export default function TabLayout() {
+  const router = useRouter();
   return (
     <Tabs
       screenOptions={{
@@ -33,9 +34,7 @@ export default function TabLayout() {
             focused: boolean;
           }) => (
             <Ionicons
-              name={
-                focused ? "home" : "home-outline"
-              }
+              name={focused ? "home" : "home-outline"}
               color={color}
               size={24}
             />
@@ -43,7 +42,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="products"
+        name="products/index"
         options={{
           headerShown: false,
           title: "Products",
@@ -58,6 +57,28 @@ export default function TabLayout() {
               name={focused ? "storefront" : "storefront-outline"}
               color={color}
               size={24}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="products/[id]"
+        options={{
+          tabBarVisible: false,
+          tabBarStyle: {
+            display: "none",
+          },
+          headerShown: true,
+          title: "Product Details!",
+          headerStyle: {
+            color: "black",
+          },
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color="black"
+              onPress={() => router.back()}
             />
           ),
         }}
