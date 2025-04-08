@@ -10,11 +10,11 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.highlight,
         headerStyle: {
-          backgroundColor: Colors.background,
+          backgroundColor: 'green',
         },
         headerShadowVisible: false,
+        tabBarActiveTintColor: Colors.highlight,
         tabBarStyle: {
           backgroundColor: Colors.background,
         },
@@ -41,7 +41,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="products/index"
+        name="products"
         options={{
           headerShown: false,
           title: "Products",
