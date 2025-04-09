@@ -48,7 +48,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
           >
             <Text>More Details</Text>
           </SmartButton>
-          <SmartButton onPress={handleAddToCartPress} backgroundColor={Colors.highlight}>
+          <SmartButton
+            onPress={handleAddToCartPress}
+            backgroundColor={Colors.highlight}
+          >
             <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
           </SmartButton>
         </View>
