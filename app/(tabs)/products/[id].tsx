@@ -7,6 +7,8 @@ import { renderStars } from "@/utils/ratings";
 const ProductDetails = () => {
   const { selectedProduct } = useProductContext();
 
+  // This should never happen, but just in case
+  // we don't want to crash the app if the product is not found
   if (!selectedProduct) {
     return (
       <View>
@@ -15,11 +17,19 @@ const ProductDetails = () => {
     );
   }
 
+  const handleAddToCartPress = () => {
+    // TODO: handle add to cart logic here
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.area}>
         <Text style={styles.title}>{selectedProduct.title}</Text>
-        <Image source={{ uri: selectedProduct.image }} style={styles.image} />
+        <Image
+          source={{ uri: selectedProduct.image }}
+          style={styles.image}
+          resizeMode={"contain"}
+        />
         <Text>{selectedProduct.description}</Text>
       </View>
       <View style={styles.area}>
@@ -27,14 +37,16 @@ const ProductDetails = () => {
           <Text>{selectedProduct.category}</Text>
           <View style={styles.ratings}>
             <Text>{selectedProduct.rating.rate}</Text>
-            <View style={styles.stars}>{renderStars(selectedProduct.rating.rate)}</View>
+            <View style={styles.stars}>
+              {renderStars(selectedProduct.rating.rate)}
+            </View>
             <Text>({selectedProduct.rating.count})</Text>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.price}>${selectedProduct.price}</Text>
           <View style={{ flexDirection: "row", gap: 8 }}>
-            <SmartButton onPress={() => {}} backgroundColor={Colors.highlight}>
+            <SmartButton onPress={handleAddToCartPress} backgroundColor={Colors.highlight}>
               <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
             </SmartButton>
           </View>
@@ -62,7 +74,6 @@ const styles = StyleSheet.create({
   image: {
     width: 240,
     height: 240,
-    resizeMode: "contain",
     alignSelf: "center",
   },
   row: {

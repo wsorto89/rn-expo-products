@@ -10,6 +10,15 @@ type SmartButtonProps = {
   children: ReactNode;
 };
 
+/**
+ * @description A smart button component that handles ripple effect and background color for both iOS and Android platforms.
+ * @param {() => void} props.onPress - Function to be called when the button is pressed.
+ * @param {string?} props.rippleColor - Color of the ripple effect (default: Colors.lowContrast).
+ * @param {string?} props.backgroundColor - Background color of the button (default: Colors.contrast).
+ * @param {ViewStyle?} props.style - Additional styles to be applied to the button.
+ * @param {ReactNode} props.children - Content to be displayed inside the button.
+ * @returns A Pressable component that acts as a button with ripple effect and customizable styles.
+ */
 const SmartButton = ({
   onPress,
   rippleColor = Colors.lowContrast,

@@ -1,6 +1,5 @@
-//import "../gesture-handler"; // This is required for react-native-gesture-handler to work properly
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -9,21 +8,43 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { Colors } from "@/constants/colors";
+import { Drawer } from "react-native-drawer-layout";
+import DrawerContent from "@/components/products/drawer-content";
 import ProductCard from "@/components/products/product-card";
 import SmartButton from "@/components/ui/smart-button";
+import { Colors } from "@/constants/colors";
 import useDebounce from "@/hooks/use-debounce";
-import { Product } from "@/types";
+import { Product, ProductFilters } from "@/types";
 
+/**
+ * @returns {JSX.Element} - A component that displays a list of products with filtering options.
+ * It fetches product data from an API, allows users to search and filter products,
+ * and displays them in a list format.
+ * It also includes a drawer for advanced filtering options.
+ */
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [filterText, setFilterText] = useState("");
+  const [open, setOpen] = useState(false);
+  const [filters, setFilters] = useState<ProductFilters>({
+    minRating: null,
+    maxPrice: null,
+    category: null,
+  });
 
   // Using a custom hook to debounce the filter text input
   // This helps to reduce the number of re-renders
   const debouncedFilterText = useDebounce(filterText);
+
+  const handleOpenDrawer = () => {
+    setOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -60,41 +81,68 @@ const ProductList = () => {
   // Using useMemo to optimize performance by memoizing the filtered products
   const filteredProducts = useMemo(
     () =>
-      products.filter((product) =>
-        product.title.toLowerCase().includes(debouncedFilterText.toLowerCase())
+      products.filter(
+        (product) =>
+          product.title
+            .toLowerCase()
+            .includes(debouncedFilterText.toLowerCase()) &&
+          (filters.minRating === null ||
+            product.rating.rate >= filters.minRating) &&
+          (filters.maxPrice === null || product.price <= filters.maxPrice) &&
+          (filters.category === null ||
+            product.category.toLowerCase() === filters.category.toLowerCase())
       ),
-    [products, debouncedFilterText]
+    [products, debouncedFilterText, filters]
   );
 
   return (
-    <View style={styles.container}>
-      {isLoading && <ActivityIndicator size="large" color={Colors.highlight} />}
-      {!!error && <Text style={styles.error}>Error: {error}</Text>}
-      {products.length === 0 && !isLoading && !error && (
-        <Text>No products available</Text>
+    <Drawer
+      open={open}
+      onOpen={handleOpenDrawer}
+      onClose={handleCloseDrawer}
+      renderDrawerContent={() => (
+        <DrawerContent
+          key={open ? `open-${Date.now()}` : "closed"} // Force re-render on open
+          onClose={handleCloseDrawer}
+          filters={filters}
+          setFilters={setFilters}
+        />
       )}
-      {products.length > 0 && !isLoading && !error && (
-        <>
-          <View style={{ flexDirection: "row", gap: 8 }}>
-            <TextInput
-              value={filterText}
-              onChangeText={setFilterText}
-              placeholder="Search products..."
-              style={styles.textFilter}
+    >
+      <View style={styles.container}>
+        {isLoading && (
+          <ActivityIndicator size="large" color={Colors.highlight} />
+        )}
+        {!!error && <Text style={styles.error}>Error: {error}</Text>}
+        {products.length === 0 && !isLoading && !error && (
+          <Text>No products available</Text>
+        )}
+        {products.length > 0 && !isLoading && !error && (
+          <>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <TextInput
+                value={filterText}
+                onChangeText={setFilterText}
+                placeholder="Search products..."
+                style={styles.textFilter}
+              />
+              <SmartButton
+                onPress={handleOpenDrawer}
+                backgroundColor={Colors.contrast}
+              >
+                <Ionicons name="filter" size={32} color={Colors.icon} />
+              </SmartButton>
+            </View>
+            <FlatList
+              keyExtractor={(item) => item.id.toString()}
+              data={filteredProducts}
+              renderItem={({ item }) => <ProductCard product={item} />}
+              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
             />
-            <SmartButton onPress={() => {}} backgroundColor={Colors.contrast}>
-              <Ionicons name="filter" size={32} color={Colors.icon} />
-            </SmartButton>
-          </View>
-          <FlatList
-            keyExtractor={(item) => item.id.toString()}
-            data={filteredProducts}
-            renderItem={({ item }) => <ProductCard product={item} />}
-            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-          />
-        </>
-      )}
-    </View>
+          </>
+        )}
+      </View>
+    </Drawer>
   );
 };
 

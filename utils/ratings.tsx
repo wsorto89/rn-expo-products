@@ -5,7 +5,7 @@ import { Colors } from "@/constants/colors";
  * The maximum rating value for the stars.
  * This is used to determine how many stars to render.
  */
-const RATING_MAX = 5;
+export const RATING_MAX = 5;
 
 /**
  * Renders a star rating based on the given rating value.

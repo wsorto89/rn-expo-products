@@ -19,10 +19,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
     router.push(`/products/${product.id}`);
   };
 
+  const handleAddToCartPress = () => {
+    // TODO: Handle add to cart logic here
+  };
+
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{product.title}</Text>
-      <Image source={{ uri: product.image }} style={styles.image} />
+      <Image
+        source={{ uri: product.image }}
+        style={styles.image}
+        resizeMode={"contain"}
+      />
       <View style={styles.row}>
         <Text>{product.category}</Text>
         <View style={styles.ratings}>
@@ -40,7 +48,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           >
             <Text>More Details</Text>
           </SmartButton>
-          <SmartButton onPress={() => {}} backgroundColor={Colors.highlight}>
+          <SmartButton onPress={handleAddToCartPress} backgroundColor={Colors.highlight}>
             <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
           </SmartButton>
         </View>
@@ -64,7 +72,6 @@ const styles = StyleSheet.create({
   image: {
     width: 80,
     height: 80,
-    resizeMode: "contain",
     alignSelf: "center",
   },
   row: {
