@@ -25,11 +25,11 @@ const ProductDetails = () => {
       <View style={styles.area}>
         <View style={styles.row}>
           <Text>{selectedProduct.category}</Text>
-          <Text>
+          <View style={styles.ratings}>
             <Text>{selectedProduct.rating.rate}</Text>
-            {renderStars(selectedProduct.rating.rate)}
-            <Text> ({selectedProduct.rating.count})</Text>
-          </Text>
+            <View style={styles.stars}>{renderStars(selectedProduct.rating.rate)}</View>
+            <Text>({selectedProduct.rating.count})</Text>
+          </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.price}>${selectedProduct.price}</Text>
@@ -69,6 +69,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  ratings: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  stars: {
+    flexDirection: "row",
   },
   price: {
     fontSize: 20,

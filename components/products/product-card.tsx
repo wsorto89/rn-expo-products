@@ -25,11 +25,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <Image source={{ uri: product.image }} style={styles.image} />
       <View style={styles.row}>
         <Text>{product.category}</Text>
-        <Text>
+        <View style={styles.ratings}>
           <Text>{product.rating.rate}</Text>
-          {renderStars(product.rating.rate)}
-          <Text> ({product.rating.count})</Text>
-        </Text>
+          <View style={styles.stars}>{renderStars(product.rating.rate)}</View>
+          <Text>({product.rating.count})</Text>
+        </View>
       </View>
       <View style={styles.row}>
         <Text style={styles.price}>${product.price}</Text>
@@ -71,6 +71,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  ratings: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  stars: {
+    flexDirection: "row",
   },
   price: {
     fontSize: 18,
