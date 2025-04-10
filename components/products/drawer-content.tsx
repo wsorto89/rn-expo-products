@@ -14,15 +14,15 @@ type DrawerContentProps = {
 };
 
 /**
+ * @description It includes input fields for minimum rating, maximum price, and category.
+ * It also provides buttons to clear and apply the filters.
+ * The component uses local state to manage the input values and updates the filters when the user applies them.
+ * It also handles input validation for the minimum rating and maximum price fields.
  * @param {Object} props - Component props.
  * @param {() => void} props.onClose - Function to close the drawer.
  * @param {ProductFilters} props.filters - The current filters applied to the product list.
  * @param {(filters: ProductFilters) => void} props.setFilters - Function to update the filters.
  * @returns {JSX.Element} - A component that renders the content of the drawer for filtering products.
- * It includes input fields for minimum rating, maximum price, and category.
- * It also provides buttons to clear and apply the filters.
- * The component uses local state to manage the input values and updates the filters when the user applies them.
- * It also handles input validation for the minimum rating and maximum price fields.
  */
 const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => {
   const [minRating, setMinRating] = useState<string>(filters.minRating !== null ? filters.minRating.toString() : "");

@@ -8,7 +8,7 @@ import { Colors } from "@/constants/colors";
 export const RATING_MAX = 5;
 
 /**
- * Renders a star rating based on the given rating value.
+ * @description Renders a star rating based on the given rating value.
  * @param {number} rating - The rating value (1 to 5).
  * @returns {JSX.Element[]} An array of star elements.
  */

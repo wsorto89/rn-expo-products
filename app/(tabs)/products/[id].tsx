@@ -1,11 +1,20 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
+import { useCartContext } from "@/context/cart-context";
 import { useProductContext } from "@/context/product-context";
 import { renderStars } from "@/utils/ratings";
 
+/**
+ * @description This component displays the details of a selected product.
+ * It includes the product's title, image, description, category, rating, and price.
+ * It also provides a button to add the product to the cart.
+ * @returns {JSX.Element}
+ */
 const ProductDetails = () => {
   const { selectedProduct } = useProductContext();
+  const { addToCart } = useCartContext();
 
   // This should never happen, but just in case
   // we don't want to crash the app if the product is not found
@@ -18,13 +27,19 @@ const ProductDetails = () => {
   }
 
   const handleAddToCartPress = () => {
-    // TODO: handle add to cart logic here
+    addToCart(selectedProduct);
+  };
+
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(selectedProduct.title);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.area}>
-        <Text style={styles.title}>{selectedProduct.title}</Text>
+        <Pressable onPress={copyToClipboard}>
+          <Text style={styles.title}>{selectedProduct.title}</Text>
+        </Pressable>
         <Image
           source={{ uri: selectedProduct.image }}
           style={styles.image}
@@ -46,7 +61,10 @@ const ProductDetails = () => {
         <View style={styles.row}>
           <Text style={styles.price}>${selectedProduct.price}</Text>
           <View style={{ flexDirection: "row", gap: 8 }}>
-            <SmartButton onPress={handleAddToCartPress} backgroundColor={Colors.highlight}>
+            <SmartButton
+              onPress={handleAddToCartPress}
+              backgroundColor={Colors.highlight}
+            >
               <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
             </SmartButton>
           </View>

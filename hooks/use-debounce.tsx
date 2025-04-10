@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 /**
- * @param value 
- * @param delay 
- * @returns Debounced value after a specified delay
  * @description A custom hook that returns a debounced value after a specified delay.
+ * @param {T} value 
+ * @param {number} delay 
+ * @returns Debounced value after a specified delay
  */
 const useDebounce = <T,>(value: T, delay: number = 400): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);

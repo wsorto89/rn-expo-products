@@ -2,12 +2,12 @@ import { View, StyleSheet } from "react-native";
 import { Link, Stack } from "expo-router";
 import { Colors } from "@/constants/colors";
 
-/* This originally came from expo
- * This file is used to display a 404 Not Found screen.
+/**
+ * @description This file is used to display a 404 Not Found screen.
  * It is displayed when the user navigates to a route that does not exist.
  * The screen contains a link to navigate back to the home screen.
  */
-export default function NotFoundScreen() {
+const NotFoundScreen = () => {
   return (
     <>
       <Stack.Screen options={{ title: "Oops! Not Found" }} />
@@ -34,3 +34,5 @@ const styles = StyleSheet.create({
     color: Colors.contrast,
   },
 });
+
+export default NotFoundScreen;

@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -17,10 +17,10 @@ import useDebounce from "@/hooks/use-debounce";
 import { Product, ProductFilters } from "@/types";
 
 /**
- * @returns {JSX.Element} - A component that displays a list of products with filtering options.
- * It fetches product data from an API, allows users to search and filter products,
+ * @description It fetches product data from an API, allows users to search and filter products,
  * and displays them in a list format.
  * It also includes a drawer for advanced filtering options.
+ * @returns {JSX.Element} - A component that displays a list of products with filtering options.
  */
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);

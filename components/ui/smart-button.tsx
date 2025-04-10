@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
-import { Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import { GestureResponderEvent, Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import { Colors } from "@/constants/colors";
 
 type SmartButtonProps = {
-  onPress: () => void;
+  onPress: (event: GestureResponderEvent) => void;
   rippleColor?: string;
   backgroundColor?: string;
   style?: ViewStyle;
@@ -12,7 +12,7 @@ type SmartButtonProps = {
 
 /**
  * @description A smart button component that handles ripple effect and background color for both iOS and Android platforms.
- * @param {() => void} props.onPress - Function to be called when the button is pressed.
+ * @param {GestureResponderEvent => void} props.onPress - Function to be called when the button is pressed.
  * @param {string?} props.rippleColor - Color of the ripple effect (default: Colors.lowContrast).
  * @param {string?} props.backgroundColor - Background color of the button (default: Colors.contrast).
  * @param {ViewStyle?} props.style - Additional styles to be applied to the button.
@@ -26,10 +26,6 @@ const SmartButton = ({
   style,
   children,
 }: SmartButtonProps) => {
-  const handlePress = () => {
-    onPress();
-  };
-
   return (
     <View style={styles.parent}>
       <Pressable
@@ -46,7 +42,7 @@ const SmartButton = ({
           },
           style,
         ]}
-        onPress={handlePress}
+        onPress={onPress}
       >
         {children}
       </Pressable>

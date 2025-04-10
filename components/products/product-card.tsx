@@ -1,18 +1,27 @@
+import * as Clipboard from "expo-clipboard";
 import { useRouter } from "expo-router";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
 import { useProductContext } from "@/context/product-context";
 import { Product } from "@/types";
 import { renderStars } from "@/utils/ratings";
+import { useCartContext } from "@/context/cart-context";
 
 type ProductCardProps = {
   product: Product;
 };
 
+/**
+ * @description This component displays a product card with its title, image, category, rating, and price.
+ * It also provides buttons for more details and adding the product to the cart.
+ * @param {ProductCardProps} product - The product to display. 
+ * @returns {JSX.Element}
+ */
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
   const { setSelectedProduct } = useProductContext();
+  const { addToCart } = useCartContext();
 
   const handleMoreDetailsPress = () => {
     setSelectedProduct(product);
@@ -20,12 +29,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const handleAddToCartPress = () => {
-    // TODO: Handle add to cart logic here
+    addToCart(product);
+  };
+
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(product.title);
   };
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>{product.title}</Text>
+      <Pressable onPress={copyToClipboard}>
+        <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+          {product.title}
+        </Text>
+      </Pressable>
       <Image
         source={{ uri: product.image }}
         style={styles.image}
