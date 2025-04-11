@@ -15,6 +15,7 @@ import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
 import useDebounce from "@/hooks/use-debounce";
 import { Product, ProductFilters } from "@/types";
+import BadgeContainer from "@/components/ui/badge-container";
 
 /**
  * @description It fetches product data from an API, allows users to search and filter products,
@@ -95,6 +96,8 @@ const ProductList = () => {
     [products, debouncedFilterText, filters]
   );
 
+  const filterCount = Object.values(filters).filter(Boolean).length;
+
   return (
     <Drawer
       open={open}
@@ -128,12 +131,14 @@ const ProductList = () => {
                 placeholder="Search products..."
                 style={styles.textFilter}
               />
-              <SmartButton
-                onPress={handleOpenDrawer}
-                backgroundColor={Colors.contrast}
-              >
-                <Ionicons name="filter" size={32} color={Colors.icon} />
-              </SmartButton>
+              <BadgeContainer count={filterCount} containerStyles={{ marginRight: 8}}>
+                <SmartButton
+                  onPress={handleOpenDrawer}
+                  backgroundColor={Colors.contrast}
+                >
+                  <Ionicons name="filter" size={32} color={Colors.icon} />
+                </SmartButton>
+              </BadgeContainer>
             </View>
             <FlatList
               keyExtractor={(item) => item.id.toString()}

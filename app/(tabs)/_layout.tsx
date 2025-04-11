@@ -1,6 +1,8 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/colors";
+import { useCartContext } from "@/context/cart-context";
+import BadgeContainer from "@/components/ui/badge-container";
 
 /**
  * @description This file is used to define the layout for the tabs in the app.
@@ -9,11 +11,16 @@ import { Colors } from "@/constants/colors";
  * @returns {JSX.Element}
  */
 const TabLayout = () => {
+  const { cartItems } = useCartContext();
+  const totalItems = Array.from(cartItems.values()).reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
   return (
     <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: 'green',
+          backgroundColor: "green",
         },
         headerShadowVisible: false,
         tabBarActiveTintColor: Colors.highlight,
@@ -74,16 +81,18 @@ const TabLayout = () => {
             color: string;
             focused: boolean;
           }) => (
-            <Ionicons
-              name={focused ? "cart" : "cart-outline"}
-              color={color}
-              size={24}
-            />
+            <BadgeContainer count={totalItems} badgeStyles={{ right: -12 }}>
+              <Ionicons
+                name={focused ? "cart" : "cart-outline"}
+                color={color}
+                size={24}
+              />
+            </BadgeContainer>
           ),
         }}
       />
     </Tabs>
   );
-}
+};
 
 export default TabLayout;
