@@ -1,7 +1,9 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Colors } from "@/constants/colors";
 import { useCartContext } from "@/context/cart-context";
 import CartCard from "@/components/cart/cart-item-cart";
+import SmartButton from "@/components/ui/smart-button";
 
 /**
  * @description This component displays the cart items and their total cost.
@@ -9,7 +11,7 @@ import CartCard from "@/components/cart/cart-item-cart";
  * @returns {JSX.Element}
  */
 const Cart = () => {
-  const { cartItems } = useCartContext();
+  const { cartItems, clearCart } = useCartContext();
   const totalItems = Array.from(cartItems.values()).reduce(
     (total, item) => total + item.quantity,
     0
@@ -18,6 +20,15 @@ const Cart = () => {
     (total, item) => total + item.price * item.quantity,
     0
   );
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      clearCart(); // Clear the cart when refreshing
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -27,13 +38,29 @@ const Cart = () => {
       {cartItems.size === 0 ? (
         <Text style={styles.emptyCart}>Your cart is empty</Text>
       ) : (
-        <FlatList
-          data={Array.from(cartItems.values())} // Convert the cart items to an array
-          renderItem={({ item }) => <CartCard item={item} />}
-          ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <>
+          <Text style={[styles.emptyCart, { marginBottom: 8 }]}>
+            Pull down to clear cart
+          </Text>
+          <FlatList
+            data={Array.from(cartItems.values())} // Convert the cart items to an array
+            renderItem={({ item }) => <CartCard item={item} />}
+            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+            keyExtractor={(item) => item.id.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        </>
       )}
+      <SmartButton
+        onPress={clearCart}
+        backgroundColor={Colors.highlight}
+        style={styles.clearButton}
+        disabled={cartItems.size === 0}
+      >
+        <Text style={styles.clear}>Clear Cart</Text>
+      </SmartButton>
     </View>
   );
 };
@@ -43,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     padding: 16,
+    justifyContent: "space-between",
   },
   emptyCart: {
     textAlign: "center",
@@ -55,6 +83,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     color: Colors.contrast,
     textAlign: "center",
+  },
+  clearButton: {
+    marginTop: 16,
+    alignSelf: "center",
+  },
+  clear: {
+    color: Colors.contrast,
+    fontWeight: "bold",
   },
 });
 
