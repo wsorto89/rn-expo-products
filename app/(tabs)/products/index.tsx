@@ -111,7 +111,9 @@ const ProductList = () => {
     >
       <View style={styles.container}>
         {isLoading && (
-          <ActivityIndicator size="large" color={Colors.highlight} />
+          <View style={styles.loader}>
+            <ActivityIndicator size={72} color={Colors.highlight} />
+          </View>
         )}
         {!!error && <Text style={styles.error}>Error: {error}</Text>}
         {products.length === 0 && !isLoading && !error && (
@@ -119,7 +121,7 @@ const ProductList = () => {
         )}
         {products.length > 0 && !isLoading && !error && (
           <>
-            <View style={{ flexDirection: "row", gap: 8 }}>
+            <View style={styles.row}>
               <TextInput
                 value={filterText}
                 onChangeText={setFilterText}
@@ -138,6 +140,7 @@ const ProductList = () => {
               data={filteredProducts}
               renderItem={({ item }) => <ProductCard product={item} />}
               ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+              contentContainerStyle={{ padding: 16 }}
             />
           </>
         )}
@@ -152,9 +155,18 @@ const styles = StyleSheet.create({
     gap: 16,
     backgroundColor: Colors.background,
   },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   error: {
     color: Colors.error,
     fontSize: 16,
+  },
+  row: {
+    flexDirection: "row",
+    gap: 8,
   },
   textFilter: {
     borderWidth: 2,
