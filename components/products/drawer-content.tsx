@@ -30,7 +30,7 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
   const [category, setCategory] = useState<string>(filters.category !== null ? filters.category.toString() : "");
 
   const handleMinRatingChange = (text: string) => {
-    const parsedValue = parseInt(text);
+    const parsedValue = parseFloat(text);
 
     if (
       !isNaN(parsedValue) &&
@@ -44,7 +44,7 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
   };
 
   const handleMaxPriceChange = (text: string) => {
-    const parsedValue = parseInt(text);
+    const parsedValue = parseFloat(text);
 
     if (!isNaN(parsedValue) && parsedValue >= RATING_MIN) {
       setMaxPrice(text);
@@ -60,8 +60,8 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
   };
 
   const handleApplyPress = () => {
-    const parsedMinRating = parseInt(minRating, 10) || null;
-    const parsedMaxPrice = parseInt(maxPrice, 10) || null;
+    const parsedMinRating = parseFloat(minRating) || null;
+    const parsedMaxPrice = parseFloat(maxPrice) || null;
     const parsedCategory = category || null;
     setFilters({
       minRating: parsedMinRating,
