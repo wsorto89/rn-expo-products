@@ -22,7 +22,6 @@ type DrawerContentProps = {
  * @param {() => void} props.onClose - Function to close the drawer.
  * @param {ProductFilters} props.filters - The current filters applied to the product list.
  * @param {(filters: ProductFilters) => void} props.setFilters - Function to update the filters.
- * @returns {JSX.Element} - A component that renders the content of the drawer for filtering products.
  */
 const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => {
   const [minRating, setMinRating] = useState<string>(filters.minRating !== null ? filters.minRating.toString() : "");

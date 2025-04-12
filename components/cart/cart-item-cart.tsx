@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
-import { useCartContext } from "@/context/cart-context";
+import { useCartDispatch } from "@/context/cart-context";
 import { CartItem } from "@/types";
 
 type CartCardProps = {
@@ -13,31 +13,20 @@ type CartCardProps = {
  * @description This component renders a card for a cart item, displaying its title, image, price, and quantity.
  * It also provides buttons to increment, decrement, or remove the item from the cart.
  * @param {CartItem} item - The cart item to display.
- * @returns {JSX.Element}
  */
 const CartCard = ({ item }: CartCardProps) => {
-  const { cartItems, addToCart, decrementFromCart, removeFromCart } =
-    useCartContext();
+  const cartDispatcher = useCartDispatch();
 
   const handleIncrement = () => {
-    addToCart(item);
+    cartDispatcher({ type: "ADD_TO_CART", payload: item });
   };
 
   const handleDecrement = () => {
-    const existingItem = cartItems.get(item.id);
-    if (!existingItem) {
-      console.error("Item not found in cart:", item.id);
-      return;
-    }
-    if (existingItem.quantity > 1) {
-      decrementFromCart(item.id);
-    } else {
-      removeFromCart(item.id);
-    }
+    cartDispatcher({ type: "DECREMENT_FROM_CART", payload: item.id });
   };
 
   const handleRemove = () => {
-    removeFromCart(item.id);
+    cartDispatcher({ type: "REMOVE_FROM_CART", payload: item.id });
   };
 
   return (

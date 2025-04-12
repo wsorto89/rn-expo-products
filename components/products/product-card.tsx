@@ -6,7 +6,7 @@ import { Colors } from "@/constants/colors";
 import { useProductContext } from "@/context/product-context";
 import { Product } from "@/types";
 import { renderStars } from "@/utils/ratings";
-import { useCartContext } from "@/context/cart-context";
+import { useCartDispatch } from "@/context/cart-context";
 
 type ProductCardProps = {
   product: Product;
@@ -15,13 +15,12 @@ type ProductCardProps = {
 /**
  * @description This component displays a product card with its title, image, category, rating, and price.
  * It also provides buttons for more details and adding the product to the cart.
- * @param {ProductCardProps} product - The product to display. 
- * @returns {JSX.Element}
+ * @param {ProductCardProps} product - The product to display
  */
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
   const { setSelectedProduct } = useProductContext();
-  const { addToCart } = useCartContext();
+  const cartDispatcher = useCartDispatch();
 
   const handleMoreDetailsPress = () => {
     setSelectedProduct(product);
@@ -29,7 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const handleAddToCartPress = () => {
-    addToCart(product);
+    cartDispatcher({ type: "ADD_TO_CART", payload: product });
   };
 
   const copyToClipboard = async () => {

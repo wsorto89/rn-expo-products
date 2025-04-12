@@ -21,7 +21,6 @@ import BadgeContainer from "@/components/ui/badge-container";
  * @description It fetches product data from an API, allows users to search and filter products,
  * and displays them in a list format.
  * It also includes a drawer for advanced filtering options.
- * @returns {JSX.Element} - A component that displays a list of products with filtering options.
  */
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);

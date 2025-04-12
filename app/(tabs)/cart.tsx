@@ -1,17 +1,19 @@
 import React, { useCallback, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Colors } from "@/constants/colors";
-import { useCartContext } from "@/context/cart-context";
+import { useCart } from "@/context/cart-context";
 import CartCard from "@/components/cart/cart-item-cart";
 import SmartButton from "@/components/ui/smart-button";
 
 /**
  * @description This component displays the cart items and their total cost.
  * It also displays a message if the cart is empty.
- * @returns {JSX.Element}
  */
 const Cart = () => {
-  const { cartItems, clearCart } = useCartContext();
+  const {
+    state: { cartItems },
+    dispatch: cartDispatcher,
+  } = useCart();
   const totalItems = Array.from(cartItems.values()).reduce(
     (total, item) => total + item.quantity,
     0
@@ -29,6 +31,10 @@ const Cart = () => {
       setRefreshing(false);
     }, 2000);
   }, []);
+
+  const clearCart = () => {
+    cartDispatcher({ type: "CLEAR_CART" });
+  };
 
   return (
     <View style={styles.container}>

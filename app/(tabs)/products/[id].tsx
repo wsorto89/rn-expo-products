@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
-import { useCartContext } from "@/context/cart-context";
+import { useCartDispatch } from "@/context/cart-context";
 import { useProductContext } from "@/context/product-context";
 import { renderStars } from "@/utils/ratings";
 
@@ -17,11 +17,10 @@ import { renderStars } from "@/utils/ratings";
  * @description This component displays the details of a selected product.
  * It includes the product's title, image, description, category, rating, and price.
  * It also provides a button to add the product to the cart.
- * @returns {JSX.Element}
  */
 const ProductDetails = () => {
   const { selectedProduct } = useProductContext();
-  const { addToCart } = useCartContext();
+  const cartDispatcher = useCartDispatch();
 
   // This should never happen, but just in case
   // we don't want to crash the app if the product is not found
@@ -34,7 +33,7 @@ const ProductDetails = () => {
   }
 
   const handleAddToCartPress = () => {
-    addToCart(selectedProduct);
+    cartDispatcher({ type: "ADD_TO_CART", payload: selectedProduct });
   };
 
   const copyToClipboard = async () => {

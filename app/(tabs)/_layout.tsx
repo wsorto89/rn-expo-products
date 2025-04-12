@@ -1,17 +1,16 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/colors";
-import { useCartContext } from "@/context/cart-context";
+import { useCartState } from "@/context/cart-context";
 import BadgeContainer from "@/components/ui/badge-container";
 
 /**
  * @description This file is used to define the layout for the tabs in the app.
  * It uses the Tabs component from expo-router to create a tabbed navigation layout.
  * Any file in the app/(tabs) directory will be treated as a tab screen.
- * @returns {JSX.Element}
  */
 const TabLayout = () => {
-  const { cartItems } = useCartContext();
+  const { cartItems } = useCartState();
   const totalItems = Array.from(cartItems.values()).reduce(
     (total, item) => total + item.quantity,
     0

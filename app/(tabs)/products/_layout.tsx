@@ -7,7 +7,6 @@ import { ProductProvider } from "@/context/product-context";
  * The ProductProvider context is used to manage the state of the selected product.
  * It contains two screens: the product list (index) and the product details ([id]).
  * The product list screen is hidden (headerShown: false) while the product details screen shows the header with the title "Product Detail".
- * @returns {JSX.Element}
  */
 const ProductsLayout = () => {
   return (

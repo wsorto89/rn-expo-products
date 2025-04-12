@@ -10,7 +10,6 @@ import { CartProvider } from "@/context/cart-context";
  * The root layout is the entry point for the app and is used to define the overall structure of the app.
  * It wraps the entire app in a SafeAreaProvider and SafeAreaView to ensure that the app is displayed correctly on all devices.
  * It also provides the CartProvider context to manage the state of the cart throughout the app.
- * @returns {JSX.Element}
  */
 const RootLayout = () => {
   return (

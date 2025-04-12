@@ -10,8 +10,7 @@ const ProductContext = createContext<ProductContextType | null>(null);
 
 /**
  * @description ProductProvider component that provides the selected product context to its children.
- * @param {ReactNode} children - The child components that will have access to the product context.
- * @returns {JSX.Element} The ProductProvider component.
+ * @param {ReactNode} children - The child components that will have access to the product context
  */
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -25,7 +24,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
 /**
  * @description Custom hook to use the ProductContext.
- * @returns {ProductContextType} The product context containing the selected product and its setter function.
+ * The product context contains the selected product and its setter function.
  * @throws {Error} If the hook is used outside of a ProductProvider.
  */
 export const useProductContext = () => {

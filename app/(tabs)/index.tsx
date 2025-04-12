@@ -3,7 +3,6 @@ import { Colors } from '@/constants/colors';
 
 /**
  * @description This screen is used to show the about information of the app.
- * @returns About screen component
  */
 const AboutScreen = () => {
   return (
