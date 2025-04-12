@@ -1,5 +1,12 @@
 import * as Clipboard from "expo-clipboard";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
 import { useCartContext } from "@/context/cart-context";
@@ -35,29 +42,39 @@ const ProductDetails = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.area}>
-        <Pressable onPress={copyToClipboard}>
-          <Text style={styles.title}>{selectedProduct.title}</Text>
-        </Pressable>
-        <Image
-          source={{ uri: selectedProduct.image }}
-          style={styles.image}
-          resizeMode={"contain"}
-        />
-        <Text>{selectedProduct.description}</Text>
-      </View>
-      <View style={styles.area}>
-        <View style={styles.row}>
-          <Text>{selectedProduct.category}</Text>
-          <View style={styles.ratings}>
-            <Text>{selectedProduct.rating.rate}</Text>
-            <View style={styles.stars}>
-              {renderStars(selectedProduct.rating.rate)}
+    <View style={styles.wrapper}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{
+          padding: 16,
+          paddingBottom: 48,
+        }}
+      >
+        <View style={styles.area}>
+          <Pressable onPress={copyToClipboard}>
+            <Text style={styles.title}>{selectedProduct.title}</Text>
+          </Pressable>
+          <Image
+            source={{ uri: selectedProduct.image }}
+            style={styles.image}
+            resizeMode={"contain"}
+          />
+          <Text>{selectedProduct.description}</Text>
+        </View>
+        <View style={styles.area}>
+          <View style={styles.row}>
+            <Text>{selectedProduct.category}</Text>
+            <View style={styles.ratings}>
+              <Text>{selectedProduct.rating.rate}</Text>
+              <View style={styles.stars}>
+                {renderStars(selectedProduct.rating.rate)}
+              </View>
+              <Text>({selectedProduct.rating.count})</Text>
             </View>
-            <Text>({selectedProduct.rating.count})</Text>
           </View>
         </View>
+      </ScrollView>
+      <View style={styles.footer}>
         <View style={styles.row}>
           <Text style={styles.price}>${selectedProduct.price}</Text>
           <View style={{ flexDirection: "row", gap: 8 }}>
@@ -75,11 +92,12 @@ const ProductDetails = () => {
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   container: {
     backgroundColor: Colors.contrast,
-    padding: 16,
     flex: 1,
-    justifyContent: "space-between",
   },
   area: {
     gap: 16,
@@ -110,6 +128,16 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+    backgroundColor: Colors.contrast,
+    borderTopWidth: 1,
+    borderColor: Colors.lowContrast,
   },
 });
 
