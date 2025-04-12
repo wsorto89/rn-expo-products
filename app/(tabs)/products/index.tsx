@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     backgroundColor: Colors.contrast,
     flex: 1,
+    marginLeft: 12,
   },
 });
 

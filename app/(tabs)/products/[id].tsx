@@ -12,6 +12,7 @@ import { Colors } from "@/constants/colors";
 import { useCartDispatch } from "@/context/cart-context";
 import { useProductContext } from "@/context/product-context";
 import { renderStars } from "@/utils/ratings";
+import NoProduct from "@/components/products/no-product";
 
 /**
  * @description This component displays the details of a selected product.
@@ -22,14 +23,11 @@ const ProductDetails = () => {
   const { selectedProduct } = useProductContext();
   const cartDispatcher = useCartDispatch();
 
-  // This should never happen, but just in case
-  // we don't want to crash the app if the product is not found
+  // This should never happen on mobile, but just in case
+  // we don't want to crash the app if the product is not found.
+  // This can happen on web by refreshing
   if (!selectedProduct) {
-    return (
-      <View>
-        <Text>No product selected.</Text>
-      </View>
-    );
+    return <NoProduct />;
   }
 
   const handleAddToCartPress = () => {
