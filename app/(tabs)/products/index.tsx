@@ -130,10 +130,14 @@ const ProductList = () => {
                 placeholder="Search products..."
                 style={styles.textFilter}
               />
-              <BadgeContainer count={filterCount} containerStyles={{ marginRight: 8}}>
+              <BadgeContainer
+                count={filterCount}
+                containerStyles={{ marginRight: 8 }}
+              >
                 <SmartButton
                   onPress={handleOpenDrawer}
                   backgroundColor={Colors.contrast}
+                  accessibilityLabel={"filter"}
                 >
                   <Ionicons name="filter" size={32} color={Colors.icon} />
                 </SmartButton>
@@ -145,6 +149,8 @@ const ProductList = () => {
               renderItem={({ item }) => <ProductCard product={item} />}
               ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
               contentContainerStyle={{ padding: 16 }}
+              accessibilityRole={"list"}
+              accessibilityLabel={"Product items list"}
             />
           </>
         )}

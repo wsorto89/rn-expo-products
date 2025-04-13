@@ -15,6 +15,7 @@ type SmartButtonProps = PressableProps & {
   style?: ViewStyle;
   children: ReactNode;
   disabled?: boolean;
+  accessibilityLabel?: string;
 };
 
 /**
@@ -23,6 +24,7 @@ type SmartButtonProps = PressableProps & {
  * @param {string?} props.backgroundColor - Background color of the button (default: Colors.contrast).
  * @param {ViewStyle?} props.style - Additional styles to be applied to the button.
  * @param {ReactNode} props.children - Content to be displayed inside the button.
+ * @param {string} props.accessibilityLabel - Label for screen readers
  * @returns A Pressable component that acts as a button with ripple effect and customizable styles.
  */
 const SmartButton = ({
@@ -32,6 +34,7 @@ const SmartButton = ({
   style,
   children,
   disabled = false,
+  accessibilityLabel,
   ...rest
 }: SmartButtonProps) => {
   return (
@@ -54,6 +57,9 @@ const SmartButton = ({
           style,
         ]}
         onPress={disabled ? undefined : onPress}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityState={{ disabled }}
         {...rest}
       >
         {children}

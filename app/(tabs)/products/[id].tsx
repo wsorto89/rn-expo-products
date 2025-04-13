@@ -48,7 +48,10 @@ const ProductDetails = () => {
         }}
       >
         <View style={styles.area}>
-          <Pressable onPress={copyToClipboard}>
+          <Pressable
+            onPress={copyToClipboard}
+            accessibilityLabel={"Hold down to copy"}
+          >
             <Text style={styles.title}>{selectedProduct.title}</Text>
           </Pressable>
           <Image

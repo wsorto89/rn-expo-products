@@ -6,7 +6,7 @@ type ProductContextType = {
   setSelectedProduct: (product: Product) => void;
 };
 
-const ProductContext = createContext<ProductContextType | null>(null);
+export const ProductContext = createContext<ProductContextType | null>(null);
 
 /**
  * @description ProductProvider component that provides the selected product context to its children.

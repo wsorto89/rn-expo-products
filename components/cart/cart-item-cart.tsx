@@ -39,6 +39,7 @@ const CartCard = ({ item }: CartCardProps) => {
           source={{ uri: item.image }}
           style={styles.itemImage}
           resizeMode={"contain"}
+          accessibilityLabel={item.description}
         />
         <Text>${item.price}</Text>
       </View>
@@ -46,13 +47,19 @@ const CartCard = ({ item }: CartCardProps) => {
         <Text>Quantity</Text>
         <Text>{item.quantity}</Text>
         <View style={styles.buttonArea}>
-          <SmartButton onPress={handleIncrement}>
+          <SmartButton
+            onPress={handleIncrement}
+            accessibilityLabel={"increment"}
+          >
             <Ionicons name="caret-up" size={32} color={Colors.icon} />
           </SmartButton>
-          <SmartButton onPress={handleDecrement}>
+          <SmartButton
+            onPress={handleDecrement}
+            accessibilityLabel={"decrement"}
+          >
             <Ionicons name="caret-down" size={32} color={Colors.icon} />
           </SmartButton>
-          <SmartButton onPress={handleRemove}>
+          <SmartButton onPress={handleRemove} accessibilityLabel={"remove"}>
             <Ionicons name="trash" size={32} color={Colors.icon} />
           </SmartButton>
         </View>
