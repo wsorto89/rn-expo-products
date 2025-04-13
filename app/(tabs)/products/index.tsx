@@ -114,7 +114,12 @@ const ProductList = () => {
       <View style={styles.container}>
         {isLoading && (
           <View style={styles.loader}>
-            <ActivityIndicator size={72} color={Colors.highlight} />
+            <ActivityIndicator
+              size={72}
+              color={Colors.highlight}
+              accessibilityRole={"progressbar"}
+              testID="loading-spinner"
+            />
           </View>
         )}
         {!!error && <Text style={styles.error}>Error: {error}</Text>}
@@ -127,7 +132,7 @@ const ProductList = () => {
               <TextInput
                 value={filterText}
                 onChangeText={setFilterText}
-                placeholder="Search products..."
+                placeholder={"Search products..."}
                 style={styles.textFilter}
               />
               <BadgeContainer
@@ -143,15 +148,19 @@ const ProductList = () => {
                 </SmartButton>
               </BadgeContainer>
             </View>
-            <FlatList
-              keyExtractor={(item) => item.id.toString()}
-              data={filteredProducts}
-              renderItem={({ item }) => <ProductCard product={item} />}
-              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-              contentContainerStyle={{ padding: 16 }}
-              accessibilityRole={"list"}
-              accessibilityLabel={"Product items list"}
-            />
+            {filteredProducts.length > 0 ? (
+              <FlatList
+                keyExtractor={(item) => item.id.toString()}
+                data={filteredProducts}
+                renderItem={({ item }) => <ProductCard product={item} />}
+                ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+                contentContainerStyle={{ padding: 16 }}
+                accessibilityRole={"list"}
+                accessibilityLabel={"Product items list"}
+              />
+            ) : (
+              <Text style={styles.emptyList}>Try adjusting filters</Text>
+            )}
           </>
         )}
       </View>
@@ -185,6 +194,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.contrast,
     flex: 1,
     marginLeft: 12,
+  },
+  emptyList: {
+    color: Colors.contrast,
+    textAlign: "center",
+    marginTop: 16,
   },
 });
 

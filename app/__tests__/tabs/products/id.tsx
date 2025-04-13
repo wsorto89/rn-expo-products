@@ -23,7 +23,6 @@ jest.mock("expo-router", () => {
   };
 });
 
-
 const mockProduct: Product = {
   id: 1,
   title: "Test Product",
