@@ -192,4 +192,31 @@ describe("Cart Context", () => {
     // Assert
     expect(result.current.state.cartItems.size).toBe(0);
   });
+
+  test("throws error for unexpected action", () => {
+    // Suppress expected console error
+    const consoleError = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    // Arrange
+    const { result } = renderHook(
+      () => ({
+        state: useCartState(),
+        dispatch: useCartDispatch(),
+      }),
+      { wrapper }
+    );
+    const unexpectedAction = { type: "UNEXPECTED_ACTION", payload: null };
+
+    // Assert
+    expect(() => {
+      //Act
+      act(() => {
+        // @ts-ignore
+        result.current.dispatch(unexpectedAction);
+      });
+    }).toThrow(`Unhandled action type: ${JSON.stringify(unexpectedAction)}`);
+
+    consoleError.mockRestore();
+  });
 });

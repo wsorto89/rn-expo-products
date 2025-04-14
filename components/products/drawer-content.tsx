@@ -7,6 +7,8 @@ import { ProductFilters } from "@/types";
 
 const RATING_MIN = 0;
 
+const PRICE_MIN = 0;
+
 type DrawerContentProps = {
   onClose: () => void;
   filters: ProductFilters;
@@ -45,7 +47,7 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
   const handleMaxPriceChange = (text: string) => {
     const parsedValue = parseFloat(text);
 
-    if (!isNaN(parsedValue) && parsedValue >= RATING_MIN) {
+    if (!isNaN(parsedValue) && parsedValue >= PRICE_MIN) {
       setMaxPrice(text);
     } else {
       setMaxPrice("");

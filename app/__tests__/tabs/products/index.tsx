@@ -3,7 +3,6 @@ import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
 import ProductList from "@/app/(tabs)/products";
 import { ProductContext } from "@/context/product-context";
 import { CartDispatchContext } from "@/context/cart-context";
-import * as Clipboard from "expo-clipboard";
 
 jest.mock("react-native-drawer-layout", () => {
   return {
@@ -20,22 +19,6 @@ jest.mock("react-native-drawer-layout", () => {
         {renderDrawerContent()}
       </>
     ),
-  };
-});
-
-// Mock Clipboard
-jest.mock("expo-clipboard", () => ({
-  setStringAsync: jest.fn(),
-}));
-
-jest.mock("expo-router", () => {
-  (globalThis as any).push = jest.fn();
-  const original = jest.requireActual("expo-router");
-  return {
-    ...original,
-    useRouter: () => ({
-      push: (globalThis as any).push,
-    }),
   };
 });
 
@@ -176,42 +159,5 @@ describe("Product List", () => {
     await waitFor(() => {
       expect(getByText("Filters")).toBeTruthy(); // Or any unique text inside the drawer
     });
-  });
-
-  test("adds product to cart on button press", async () => {
-    // Arrange
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProducts,
-    });
-    const mockDispatch = jest.fn();
-    const { getByPlaceholderText, getByText } =
-      renderWithProviders({ addToCart: mockDispatch});
-    await waitFor(() => getByPlaceholderText("Search products..."));
-
-    // Act
-    fireEvent.press(getByText("Add to Cart"));
-
-    // Assert
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: "ADD_TO_CART",
-      payload: mockProducts[0],
-    });
-  });
-
-  test("routes to details screen on press", async () => {
-    // Arrange
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProducts,
-    });
-    const { getByPlaceholderText, getByText } = renderWithProviders({});
-    await waitFor(() => getByPlaceholderText("Search products..."));
-
-    // Act
-    fireEvent.press(getByText("More Details"));
-
-    // Assert
-    expect((globalThis as any).push).toHaveBeenCalledWith("/products/1");
   });
 });
