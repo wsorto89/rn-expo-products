@@ -8,7 +8,7 @@ module.exports = function (api) {
         {
           root: ["."],
           alias: {
-            "@": "./src", // Ensure this matches your directory structure
+            "@": "./", // Ensure this matches your directory structure
           },
         },
       ],
