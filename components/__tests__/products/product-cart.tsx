@@ -10,16 +10,13 @@ jest.mock("expo-clipboard", () => ({
   setStringAsync: jest.fn(),
 }));
 
-jest.mock("expo-router", () => {
-  (globalThis as any).push = jest.fn();
-  const original = jest.requireActual("expo-router");
-  return {
-    ...original,
-    useRouter: () => ({
-      push: (globalThis as any).push,
-    }),
-  };
-});
+const mockPush = jest.fn();
+
+jest.mock("expo-router", () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
 
 const mockProduct = {
   id: 1,
@@ -91,7 +88,7 @@ describe("Product Card", () => {
     fireEvent.press(getByText("More Details"));
 
     // Assert
-    expect((globalThis as any).push).toHaveBeenCalledWith("/products/1");
+    expect(mockPush).toHaveBeenCalledWith("/products/1");
   });
 
   test("copies product title to clipboard when title is pressed", async () => {
