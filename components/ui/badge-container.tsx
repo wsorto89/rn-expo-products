@@ -27,7 +27,7 @@ const BadgeContainer = ({
     <View style={[styles.badgeContainer, containerStyles]}>
       {children}
       {count > 0 && (
-        <View style={[styles.badge, badgeStyles]}>
+        <View style={[styles.badge, badgeStyles]} testID="badge">
           <Text style={styles.badgeText}>{count}</Text>
         </View>
       )}
