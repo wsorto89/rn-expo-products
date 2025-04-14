@@ -22,6 +22,12 @@ jest.mock("react-native-drawer-layout", () => {
   };
 });
 
+jest.mock("expo-router", () => ({
+  useRouter: () => ({
+    navigate: jest.fn(),
+  }),
+}));
+
 const mockProducts = [
   {
     id: 1,
@@ -92,8 +98,6 @@ describe("Product List", () => {
 
   test("filters product list by text input", async () => {
     // Arrange
-    jest.useFakeTimers();
-
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockProducts,
@@ -107,14 +111,12 @@ describe("Product List", () => {
     fireEvent.changeText(input, "non-existent");
 
     await act(async () => {
-      jest.runAllTimers();
+      await new Promise(resolve => setTimeout(resolve, 400));
     });
 
     // Assert
     await waitFor(() => expect(queryByText("Test Product")).toBeNull());
     expect(queryByText("Try adjusting filters")).toBeTruthy();
-
-    jest.useRealTimers();
   });
 
   test("displays error on fetch failure", async () => {
