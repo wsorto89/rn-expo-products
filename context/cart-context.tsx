@@ -9,9 +9,9 @@ type CartAction =
   | { type: "REMOVE_FROM_CART"; payload: number }
   | { type: "CLEAR_CART" };
 
-const CartStateContext = createContext<CartState | null>(null);
+export const CartStateContext = createContext<CartState | null>(null);
 
-const CartDispatchContext = createContext<Dispatch<CartAction> | null>(null);
+export const CartDispatchContext = createContext<Dispatch<CartAction> | null>(null);
 
 const cartReducer = (state: CartState, action: CartAction) => {
   switch (action.type) {
@@ -44,7 +44,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
     case "CLEAR_CART":
       return { ...state, cartItems: new Map<number, CartItem>() };
     default:
-      return state;
+      throw new Error(`Unhandled action type: ${JSON.stringify(action)}`);
   }
 };
 

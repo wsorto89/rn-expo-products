@@ -27,7 +27,7 @@ const Cart = () => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      clearCart(); // Clear the cart when refreshing
+      clearCart();
       setRefreshing(false);
     }, 2000);
   }, []);
@@ -56,6 +56,9 @@ const Cart = () => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
+            testID={"flat-list"}
+            accessibilityRole={"list"}
+            accessibilityLabel={"Cart items list"}
           />
         </>
       )}

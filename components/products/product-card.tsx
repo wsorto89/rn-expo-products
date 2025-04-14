@@ -37,7 +37,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <View style={styles.card}>
-      <Pressable onPress={copyToClipboard}>
+      <Pressable
+        onPress={copyToClipboard}
+        accessibilityLabel={"Hold down to copy"}
+      >
         <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
           {product.title}
         </Text>
@@ -46,6 +49,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         source={{ uri: product.image }}
         style={styles.image}
         resizeMode={"contain"}
+        accessibilityLabel={product.description}
       />
       <View style={styles.row}>
         <Text>{product.category}</Text>
