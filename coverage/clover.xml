@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1744529477883" clover="3.2.0">
+  <project timestamp="1744529477883" name="All files">
+    <metrics statements="108" coveredstatements="101" conditionals="37" coveredconditionals="28" methods="28" coveredmethods="26" elements="173" coveredelements="155" complexity="0" loc="108" ncloc="108" packages="8" files="9" classes="9"/>
+    <package name="app.(tabs)">
+      <metrics statements="19" coveredstatements="18" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="8"/>
+      <file name="cart.tsx" path="C:\Users\wsort\projects\product-list-app\app\(tabs)\cart.tsx">
+        <metrics statements="19" coveredstatements="18" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="8"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="16" count="10" type="stmt"/>
+        <line num="17" count="10" type="stmt"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="21" count="10" type="stmt"/>
+        <line num="22" count="8" type="stmt"/>
+        <line num="25" count="10" type="stmt"/>
+        <line num="27" count="10" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="35" count="10" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="53" count="8" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="55" count="14" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="app.(tabs).products">
+      <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <file name="[id].tsx" path="C:\Users\wsort\projects\product-list-app\app\(tabs)\products\[id].tsx">
+        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="29" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.cart">
+      <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="cart-item-cart.tsx" path="C:\Users\wsort\projects\product-list-app\components\cart\cart-item-cart.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="24" count="8" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="8" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.products">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="no-product.tsx" path="C:\Users\wsort\projects\product-list-app\components\products\no-product.tsx">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.ui">
+      <metrics statements="4" coveredstatements="4" conditionals="14" coveredconditionals="10" methods="2" coveredmethods="2"/>
+      <file name="smart-button.tsx" path="C:\Users\wsort\projects\product-list-app\components\ui\smart-button.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="14" coveredconditionals="10" methods="2" coveredmethods="2"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="40" count="41" type="stmt"/>
+        <line num="48" count="41" type="stmt"/>
+        <line num="71" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="constants">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="colors.ts" path="C:\Users\wsort\projects\product-list-app\constants\colors.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="context">
+      <metrics statements="48" coveredstatements="42" conditionals="17" coveredconditionals="12" methods="7" coveredmethods="6"/>
+      <file name="cart-context.tsx" path="C:\Users\wsort\projects\product-list-app\context\cart-context.tsx">
+        <metrics statements="39" coveredstatements="36" conditionals="15" coveredconditionals="11" methods="5" coveredmethods="5"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="17" count="14" type="cond" truecount="4" falsecount="1"/>
+        <line num="19" count="10" type="stmt"/>
+        <line num="20" count="10" type="stmt"/>
+        <line num="21" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="10" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="29" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="56" count="21" type="stmt"/>
+        <line num="60" count="21" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="74" count="31" type="stmt"/>
+        <line num="75" count="31" type="cond" truecount="1" falsecount="1"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="77" count="31" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="43" type="stmt"/>
+        <line num="87" count="43" type="cond" truecount="1" falsecount="1"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="91" count="43" type="stmt"/>
+        <line num="98" count="3" type="stmt"/>
+        <line num="99" count="10" type="stmt"/>
+        <line num="100" count="10" type="stmt"/>
+        <line num="101" count="10" type="stmt"/>
+      </file>
+      <file name="product-context.tsx" path="C:\Users\wsort\projects\product-list-app\context\product-context.tsx">
+        <metrics statements="9" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="32" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="ratings.tsx" path="C:\Users\wsort\projects\product-list-app\utils\ratings.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="15" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

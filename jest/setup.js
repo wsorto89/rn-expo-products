@@ -6,5 +6,3 @@ jest.mock("@expo/vector-icons", () => {
     // Add more icons you use here
   };
 });
-
-global.setImmediate = global.setImmediate || ((fn) => setTimeout(fn, 0));

@@ -82,6 +82,32 @@ describe("Cart Screen", () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: "CLEAR_CART" });
   });
 
+  test("clears cart on pull-to-refresh", async () => {
+    // Arrange
+    jest.useFakeTimers();
+    const cart = new Map<number, CartItem>([[1, sampleItem]]);
+    const mockDispatch = jest.fn();
+    const { getByTestId } = renderWithProviders(cart, mockDispatch);
+    const flatList = getByTestId("flat-list");
+    const { refreshControl } = flatList.props;
+
+    // Act
+    await act(async () => {
+      refreshControl.props.onRefresh();
+    });
+
+    await act(async () => {
+      jest.runAllTimers();
+    });
+
+    // Assert
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({ type: "CLEAR_CART" });
+    });
+
+    jest.useRealTimers(); // clean up
+  });
+
   test("increments item quantity", () => {
     // Arrange
     const cart = new Map<number, CartItem>([[1, sampleItem]]);
@@ -130,26 +156,6 @@ describe("Cart Screen", () => {
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "REMOVE_FROM_CART",
       payload: sampleItem.id,
-    });
-  });
-
-  test("clears cart on pull-to-refresh", async () => {
-    // Arrange
-    const cart = new Map<number, CartItem>([[1, sampleItem]]);
-    const mockDispatch = jest.fn();
-    const { getByTestId } = renderWithProviders(cart, mockDispatch);
-    const flatList = getByTestId("flat-list");
-    const { refreshControl } = flatList.props;
-
-    // Act
-    await act(async () => {
-      refreshControl.props.onRefresh();
-      await new Promise(resolve => setTimeout(resolve, 2000));
-    });
-
-    // Assert
-    await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith({ type: "CLEAR_CART" });
     });
   });
 });

@@ -11,13 +11,17 @@ jest.mock("expo-clipboard", () => ({
   setStringAsync: jest.fn(),
 }));
 
-const mockNavigate = jest.fn();
-
-jest.mock("expo-router", () => ({
-  useRouter: () => ({
-    navigate: mockNavigate,
-  }),
-}));
+// Mock go back
+jest.mock("expo-router", () => {
+  (globalThis as any).navigateMock = jest.fn();
+  const original = jest.requireActual("expo-router");
+  return {
+    ...original,
+    useRouter: () => ({
+      navigate: (globalThis as any).navigateMock,
+    }),
+  };
+});
 
 const mockProduct: Product = {
   id: 1,
@@ -46,7 +50,7 @@ const renderWithProviders = (addToCartMock = jest.fn()) =>
 describe("ProductDetails Screen", () => {
   beforeEach(() => {
     // Reset mock before each test
-    mockNavigate.mockReset();
+    (globalThis as any).navigateMock?.mockReset();
   });
 
   test("renders product details", () => {
@@ -107,6 +111,6 @@ describe("ProductDetails Screen", () => {
     fireEvent.press(backButton);
 
     // Assert
-    expect(mockNavigate).toHaveBeenCalledWith("/products");
+    expect((globalThis as any).navigateMock).toHaveBeenCalledWith("/products");
   });
 });
