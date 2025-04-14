@@ -10,11 +10,14 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "dev": "set APP_VARIANT=development && npx expo start"
+    "dev": "set APP_VARIANT=development && npx expo start",
+    "coverage": "npx jest --coverage"
   },
   "jest": {
     "preset": "jest-expo",
-    "setupFiles": ["./jest/setup.js"]
+    "setupFiles": [
+      "./jest/setup.js"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
