@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
 import ProductList from "@/app/(tabs)/products";
 import { ProductContext } from "@/context/product-context";
 import { CartDispatchContext } from "@/context/cart-context";
+import { Product } from "@/types";
 
 jest.mock("react-native-drawer-layout", () => {
   return {
@@ -34,22 +35,20 @@ const mockProducts = [
   },
 ];
 
-const renderWithProviders = ({
-  addToCart = jest.fn(),
-  setSelectedProduct = jest.fn(),
-}) =>
-  render(
-    <ProductContext.Provider
-      value={{
-        selectedProduct: null,
-        setSelectedProduct: setSelectedProduct,
-      }}
-    >
-      <CartDispatchContext.Provider value={addToCart}>
-        <ProductList />
-      </CartDispatchContext.Provider>
-    </ProductContext.Provider>
-  );
+const renderWithProviders = (addToCart = jest.fn()) => {
+  const Wrapper = ({ children }: { children: JSX.Element }) => {
+    const [products, setProducts] = React.useState<Product[]>([]);
+    return (
+      <ProductContext.Provider value={{ products, setProducts }}>
+        <CartDispatchContext.Provider value={addToCart}>
+          {children}
+        </CartDispatchContext.Provider>
+      </ProductContext.Provider>
+    );
+  };
+
+  return render(<ProductList />, { wrapper: Wrapper });
+};
 
 // Mock global fetch
 beforeEach(() => {
@@ -67,7 +66,7 @@ describe("Product List", () => {
       ok: true,
       json: async () => mockProducts,
     });
-    const { getByTestId, queryByTestId } = renderWithProviders({});
+    const { getByTestId, queryByTestId } = renderWithProviders();
 
     // Assert
     expect(getByTestId("loading-spinner")).toBeTruthy();
@@ -84,7 +83,7 @@ describe("Product List", () => {
       ok: true,
       json: async () => mockProducts,
     });
-    const { getByText } = renderWithProviders({});
+    const { getByText } = renderWithProviders();
 
     // Assert
     await waitFor(() => expect(getByText("Test Product")).toBeTruthy());
@@ -98,7 +97,7 @@ describe("Product List", () => {
       ok: true,
       json: async () => mockProducts,
     });
-    const { getByPlaceholderText, queryByText } = renderWithProviders({});
+    const { getByPlaceholderText, queryByText } = renderWithProviders();
 
     await waitFor(() => expect(queryByText("Test Product")).toBeTruthy());
     const input = getByPlaceholderText("Search products...");
@@ -122,7 +121,7 @@ describe("Product List", () => {
     (fetch as jest.Mock).mockRejectedValueOnce(new Error("Fetch failed"));
 
     // Assert
-    const { findByText } = renderWithProviders({});
+    const { findByText } = renderWithProviders();
     const errorMessage = await findByText(/Fetch failed/i);
     expect(errorMessage).toBeTruthy();
   });
@@ -133,7 +132,7 @@ describe("Product List", () => {
       ok: true,
       json: async () => [],
     });
-    const { getByText } = renderWithProviders({});
+    const { getByText } = renderWithProviders();
 
     // Assert
     await waitFor(() =>
@@ -148,7 +147,7 @@ describe("Product List", () => {
       json: async () => mockProducts,
     });
     const { getByLabelText, getByPlaceholderText, getByText } =
-      renderWithProviders({});
+      renderWithProviders();
     await waitFor(() => getByPlaceholderText("Search products..."));
 
     // Act

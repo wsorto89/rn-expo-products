@@ -3,7 +3,6 @@ import { useRouter } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
-import { useProductContext } from "@/context/product-context";
 import { Product } from "@/types";
 import { renderStars } from "@/utils/ratings";
 import { useCartDispatch } from "@/context/cart-context";
@@ -19,11 +18,9 @@ type ProductCardProps = {
  */
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
-  const { setSelectedProduct } = useProductContext();
   const cartDispatcher = useCartDispatch();
 
   const handleMoreDetailsPress = () => {
-    setSelectedProduct(product);
     router.push(`/products/${product.id}`);
   };
 
@@ -61,7 +58,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </View>
       <View style={styles.row}>
         <Text style={styles.price}>${product.price}</Text>
-        <View style={{ flexDirection: "row", gap: 8 }}>
+        <View style={styles.buttons}>
           <SmartButton
             onPress={handleMoreDetailsPress}
             style={{ borderWidth: 2 }}
@@ -72,7 +69,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             onPress={handleAddToCartPress}
             backgroundColor={Colors.highlight}
           >
-            <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
+            <Text style={styles.addToCartText}>Add to Cart</Text>
           </SmartButton>
         </View>
       </View>
@@ -113,6 +110,13 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  buttons: {
+    flexDirection: "row",
+    gap: 8
+  },
+  addToCartText: {
+    color: Colors.contrast,
   },
 });
 

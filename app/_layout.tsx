@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/colors";
 import { CartProvider } from "@/context/cart-context";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 /**
  * @description This is the root layout for the app.
@@ -15,16 +16,18 @@ const RootLayout = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.app}>
-        <CartProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </CartProvider>
+        <GestureHandlerRootView>
+          <CartProvider>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </CartProvider>
+        </GestureHandlerRootView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   app: {

@@ -2,8 +2,8 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 import { Product } from "@/types";
 
 type ProductContextType = {
-  selectedProduct: Product | null;
-  setSelectedProduct: (product: Product) => void;
+  products: Product[];
+  setProducts: (products: Product[]) => void;
 };
 
 export const ProductContext = createContext<ProductContextType | null>(null);
@@ -13,10 +13,15 @@ export const ProductContext = createContext<ProductContextType | null>(null);
  * @param {ReactNode} children - The child components that will have access to the product context
  */
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   return (
-    <ProductContext.Provider value={{ selectedProduct, setSelectedProduct }}>
+    <ProductContext.Provider
+      value={{
+        products,
+        setProducts,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

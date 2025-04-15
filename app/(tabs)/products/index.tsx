@@ -14,8 +14,9 @@ import ProductCard from "@/components/products/product-card";
 import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
 import useDebounce from "@/hooks/use-debounce";
-import { Product, ProductFilters } from "@/types";
+import { ProductFilters } from "@/types";
 import BadgeContainer from "@/components/ui/badge-container";
+import { useProductContext } from "@/context/product-context";
 
 /**
  * @description It fetches product data from an API, allows users to search and filter products,
@@ -23,7 +24,7 @@ import BadgeContainer from "@/components/ui/badge-container";
  * It also includes a drawer for advanced filtering options.
  */
 const ProductList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { products, setProducts } = useProductContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [filterText, setFilterText] = useState("");
@@ -61,7 +62,7 @@ const ProductList = () => {
           );
         }
         const data = await response.json();
-        setProducts(data);
+        setProducts(data)
       } catch (error) {
         if (error instanceof Error && error.name !== "AbortError") {
           setError(error.message);

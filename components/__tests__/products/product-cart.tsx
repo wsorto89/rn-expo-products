@@ -18,7 +18,7 @@ jest.mock("expo-router", () => ({
   }),
 }));
 
-const mockProduct = {
+const mockProducts = [{
   id: 1,
   title: "Test Product",
   description: "Test Description",
@@ -26,21 +26,21 @@ const mockProduct = {
   image: "https://via.placeholder.com/150",
   category: "electronics",
   rating: { rate: 4.5, count: 100 },
-};
+}];
 
 const renderWithProviders = ({
   addToCart = jest.fn(),
-  setSelectedProduct = jest.fn(),
+  setProducts = jest.fn(),
 } = {}) =>
   render(
     <ProductContext.Provider
       value={{
-        selectedProduct: null,
-        setSelectedProduct: setSelectedProduct,
+        products: mockProducts,
+        setProducts: setProducts,
       }}
     >
       <CartDispatchContext.Provider value={addToCart}>
-        <ProductCard product={mockProduct} />
+        <ProductCard product={mockProducts[0]} />
       </CartDispatchContext.Provider>
     </ProductContext.Provider>
   );
@@ -76,7 +76,7 @@ describe("Product Card", () => {
     // Assert
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "ADD_TO_CART",
-      payload: mockProduct,
+      payload: mockProducts[0],
     });
   });
 

@@ -16,9 +16,12 @@ jest.mock("expo-router", () => ({
   useRouter: () => ({
     navigate: mockNavigate,
   }),
+  useLocalSearchParams: () => ({
+    id: "1", // or whatever fake ID you need
+  }),
 }));
 
-const mockProduct: Product = {
+const mockProducts: Product[] = [{
   id: 1,
   title: "Test Product",
   description: "This is a test product",
@@ -26,14 +29,14 @@ const mockProduct: Product = {
   image: "https://via.placeholder.com/150",
   price: 100,
   rating: { rate: 4.5, count: 10 },
-};
+}];
 
 const renderWithProviders = (addToCartMock = jest.fn()) =>
   render(
     <ProductContext.Provider
       value={{
-        selectedProduct: mockProduct,
-        setSelectedProduct: (product: Product) => {},
+        products: mockProducts,
+        setProducts: () => {},
       }}
     >
       <CartDispatchContext.Provider value={addToCartMock}>
@@ -70,7 +73,7 @@ describe("ProductDetails Screen", () => {
     // Assert
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "ADD_TO_CART",
-      payload: mockProduct,
+      payload: mockProducts[0],
     });
   });
 
@@ -90,8 +93,8 @@ describe("ProductDetails Screen", () => {
     const { getByText } = render(
       <ProductContext.Provider
         value={{
-          selectedProduct: null,
-          setSelectedProduct: (product: Product) => {},
+          products: [],
+          setProducts: () => {},
         }}
       >
         <CartDispatchContext.Provider value={() => {}}>

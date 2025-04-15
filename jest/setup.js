@@ -1,8 +1,16 @@
 jest.mock("@expo/vector-icons", () => {
   const React = require("react");
+  const { View } = require("react-native");
+  const MockIcon = (props) => <View {...props} />;
   return {
-    Ionicons: (props) => React.createElement("Icon", props),
-    MaterialIcons: (props) => React.createElement("Icon", props),
-    // Add more icons you use here
+    Ionicons: MockIcon,
+    MaterialIcons: MockIcon,
+    AntDesign: MockIcon
   };
+});
+
+jest.mock("@expo/vector-icons/build/createIconSet", () => {
+  const React = require("react");
+  const { View } = require("react-native");
+  return () => (props) => <View {...props} />;
 });
