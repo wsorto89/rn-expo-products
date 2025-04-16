@@ -1,9 +1,9 @@
-import { Stack } from "expo-router";
-import { StyleSheet } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/colors";
-import { CartProvider } from "@/context/cart-context";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Stack } from 'expo-router';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '@/constants/colors';
+import { CartProvider } from '@/context/cart-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 /**
  * @description This is the root layout for the app.

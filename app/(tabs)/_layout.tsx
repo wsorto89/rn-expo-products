@@ -1,8 +1,8 @@
-import { Tabs } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Colors } from "@/constants/colors";
-import { useCartState } from "@/context/cart-context";
-import BadgeContainer from "@/components/ui/badge-container";
+import { Tabs } from 'expo-router';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Colors } from '@/constants/colors';
+import { useCartState } from '@/context/cart-context';
+import BadgeContainer from '@/components/ui/badge-container';
 
 /**
  * @description This file is used to define the layout for the tabs in the app.
@@ -13,13 +13,13 @@ const TabLayout = () => {
   const { cartItems } = useCartState();
   const totalItems = Array.from(cartItems.values()).reduce(
     (total, item) => total + item.quantity,
-    0
+    0,
   );
   return (
     <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: "green",
+          backgroundColor: 'green',
         },
         headerShadowVisible: false,
         tabBarActiveTintColor: Colors.highlight,
@@ -32,7 +32,7 @@ const TabLayout = () => {
         name="index"
         options={{
           headerShown: false,
-          title: "Home",
+          title: 'Home',
           tabBarIcon: ({
             color,
             focused,
@@ -41,7 +41,7 @@ const TabLayout = () => {
             focused: boolean;
           }) => (
             <Ionicons
-              name={focused ? "home" : "home-outline"}
+              name={focused ? 'home' : 'home-outline'}
               color={color}
               size={24}
             />
@@ -52,7 +52,7 @@ const TabLayout = () => {
         name="products"
         options={{
           headerShown: false,
-          title: "Products",
+          title: 'Products',
           tabBarIcon: ({
             color,
             focused,
@@ -61,7 +61,7 @@ const TabLayout = () => {
             focused: boolean;
           }) => (
             <Ionicons
-              name={focused ? "storefront" : "storefront-outline"}
+              name={focused ? 'storefront' : 'storefront-outline'}
               color={color}
               size={24}
             />
@@ -72,7 +72,7 @@ const TabLayout = () => {
         name="cart"
         options={{
           headerShown: false,
-          title: "Cart",
+          title: 'Cart',
           tabBarIcon: ({
             color,
             focused,
@@ -82,7 +82,7 @@ const TabLayout = () => {
           }) => (
             <BadgeContainer count={totalItems} badgeStyles={{ right: -12 }}>
               <Ionicons
-                name={focused ? "cart" : "cart-outline"}
+                name={focused ? 'cart' : 'cart-outline'}
                 color={color}
                 size={24}
               />

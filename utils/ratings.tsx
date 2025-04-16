@@ -1,5 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '@/constants/colors';
 
 /*
  * The maximum rating value for the stars.
@@ -22,7 +22,7 @@ export function renderStars(rating: number) {
         name="star"
         size={16}
         color={i <= rating ? Colors.warning : Colors.lowContrast}
-      />
+      />,
     );
   }
   return starElements;

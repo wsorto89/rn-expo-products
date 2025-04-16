@@ -1,18 +1,18 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react-native";
-import { ProductContext } from "@/context/product-context";
-import { CartDispatchContext } from "@/context/cart-context";
-import * as Clipboard from "expo-clipboard";
-import ProductCard from "@/components/products/product-card";
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import { ProductContext } from '@/context/product-context';
+import { CartDispatchContext } from '@/context/cart-context';
+import * as Clipboard from 'expo-clipboard';
+import ProductCard from '@/components/products/product-card';
 
 // Mock Clipboard
-jest.mock("expo-clipboard", () => ({
+jest.mock('expo-clipboard', () => ({
   setStringAsync: jest.fn(),
 }));
 
 const mockPush = jest.fn();
 
-jest.mock("expo-router", () => ({
+jest.mock('expo-router', () => ({
   useRouter: () => ({
     push: mockPush,
   }),
@@ -21,11 +21,11 @@ jest.mock("expo-router", () => ({
 const mockProducts = [
   {
     id: 1,
-    title: "Test Product",
-    description: "Test Description",
+    title: 'Test Product',
+    description: 'Test Description',
     price: 10,
-    image: "https://via.placeholder.com/150",
-    category: "electronics",
+    image: 'https://via.placeholder.com/150',
+    category: 'electronics',
     rating: { rate: 4.5, count: 100 },
   },
 ];
@@ -44,7 +44,7 @@ const renderWithProviders = ({
       <CartDispatchContext.Provider value={addToCart}>
         <ProductCard product={mockProducts[0]} />
       </CartDispatchContext.Provider>
-    </ProductContext.Provider>
+    </ProductContext.Provider>,
   );
 
 // Mock global fetch
@@ -56,16 +56,16 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Product Card", () => {
-  test("displays product after fetching", async () => {
+describe('Product Card', () => {
+  test('displays product after fetching', async () => {
     // Arrange
     const { getByText } = renderWithProviders();
 
     // Assert
-    expect(getByText("Test Product")).toBeTruthy();
+    expect(getByText('Test Product')).toBeTruthy();
   });
 
-  test("adds product to cart on button press", async () => {
+  test('adds product to cart on button press', async () => {
     // Arrange
     const mockDispatch = jest.fn();
     const { getByText } = renderWithProviders({
@@ -73,34 +73,34 @@ describe("Product Card", () => {
     });
 
     // Act
-    fireEvent.press(getByText("Add to Cart"));
+    fireEvent.press(getByText('Add to Cart'));
 
     // Assert
     expect(mockDispatch).toHaveBeenCalledWith({
-      type: "ADD_TO_CART",
+      type: 'ADD_TO_CART',
       payload: mockProducts[0],
     });
   });
 
-  test("routes to details screen on press", async () => {
+  test('routes to details screen on press', async () => {
     // Arrange
     const { getByText } = renderWithProviders();
 
     // Act
-    fireEvent.press(getByText("More Details"));
+    fireEvent.press(getByText('More Details'));
 
     // Assert
-    expect(mockPush).toHaveBeenCalledWith("/products/1");
+    expect(mockPush).toHaveBeenCalledWith('/products/1');
   });
 
-  test("copies product title to clipboard when title is pressed", async () => {
+  test('copies product title to clipboard when title is pressed', async () => {
     // Arrange
     const { getByText } = renderWithProviders();
 
     // Act
-    fireEvent.press(getByText("Test Product"));
+    fireEvent.press(getByText('Test Product'));
 
     // Assert
-    expect(Clipboard.setStringAsync).toHaveBeenCalledWith("Test Product");
+    expect(Clipboard.setStringAsync).toHaveBeenCalledWith('Test Product');
   });
 });

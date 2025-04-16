@@ -1,21 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { Drawer } from "react-native-drawer-layout";
-import DrawerContent from "@/components/products/drawer-content";
-import ProductCard from "@/components/products/product-card";
-import { Colors } from "@/constants/colors";
-import useDebounce from "@/hooks/use-debounce";
-import { Product, ProductFilters } from "@/types";
-import { useProductContext } from "@/context/product-context";
-import { filterProducts } from "@/utils";
-import ProductListFilters from "@/components/products/product-list-filters";
-import useFetch from "@/hooks/use-fetch";
+} from 'react-native';
+import { Drawer } from 'react-native-drawer-layout';
+import DrawerContent from '@/components/products/drawer-content';
+import ProductCard from '@/components/products/product-card';
+import { Colors } from '@/constants/colors';
+import useDebounce from '@/hooks/use-debounce';
+import { Product, ProductFilters } from '@/types';
+import { useProductContext } from '@/context/product-context';
+import { filterProducts } from '@/utils';
+import ProductListFilters from '@/components/products/product-list-filters';
+import useFetch from '@/hooks/use-fetch';
 
 /**
  * @description It fetches product data from an API, allows users to search and filter products,
@@ -24,7 +24,7 @@ import useFetch from "@/hooks/use-fetch";
  */
 const ProductList = () => {
   const { products, setProducts } = useProductContext();
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState('');
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState<ProductFilters>({
     minRating: null,
@@ -33,7 +33,7 @@ const ProductList = () => {
   });
 
   const { error, isLoading, data } = useFetch<Product[]>(
-    "https://fakestoreapi.com/products"
+    'https://fakestoreapi.com/products',
   );
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const ProductList = () => {
   // Using useMemo to optimize performance by memoizing the filtered products
   const filteredProducts = useMemo(
     () => filterProducts(products, debouncedFilterText, filters),
-    [products, debouncedFilterText, filters]
+    [products, debouncedFilterText, filters],
   );
 
   const filterCount = Object.values(filters).filter(Boolean).length;
@@ -69,7 +69,7 @@ const ProductList = () => {
       onClose={handleCloseDrawer}
       renderDrawerContent={() => (
         <DrawerContent
-          key={open ? `open-${Date.now()}` : "closed"} // Force re-render on open
+          key={open ? `open-${Date.now()}` : 'closed'} // Force re-render on open
           onClose={handleCloseDrawer}
           filters={filters}
           setFilters={setFilters}
@@ -82,7 +82,7 @@ const ProductList = () => {
             <ActivityIndicator
               size={72}
               color={Colors.highlight}
-              accessibilityRole={"progressbar"}
+              accessibilityRole={'progressbar'}
               testID="loading-spinner"
             />
           </View>
@@ -106,8 +106,8 @@ const ProductList = () => {
                 renderItem={({ item }) => <ProductCard product={item} />}
                 ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
                 contentContainerStyle={{ padding: 16 }}
-                accessibilityRole={"list"}
-                accessibilityLabel={"Product items list"}
+                accessibilityRole={'list'}
+                accessibilityLabel={'Product items list'}
               />
             ) : (
               <Text style={styles.emptyList}>Try adjusting filters</Text>
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
   },
   loader: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   error: {
     color: Colors.error,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   emptyList: {
     color: Colors.contrast,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 16,
   },
 });

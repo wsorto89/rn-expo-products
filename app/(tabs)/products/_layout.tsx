@@ -1,5 +1,5 @@
-import { Stack } from "expo-router";
-import { ProductProvider } from "@/context/product-context";
+import { Stack } from 'expo-router';
+import { ProductProvider } from '@/context/product-context';
 
 /**
  * @description This component provides a layout for the products section of the app.
@@ -15,7 +15,7 @@ const ProductsLayout = () => {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen
           name="[id]"
-          options={{ headerShown: true, title: "Product Detail" }}
+          options={{ headerShown: true, title: 'Product Detail' }}
         />
       </Stack>
     </ProductProvider>

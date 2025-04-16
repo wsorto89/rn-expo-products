@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * React hook to fetch data from a given URL
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
  */
 const useFetch = <T,>(url: string) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [data, setData] = useState<T | null>(null);
 
   useEffect(() => {
@@ -23,13 +23,13 @@ const useFetch = <T,>(url: string) => {
         });
         if (!response.ok) {
           throw new Error(
-            `Network response failed with status: ${response.statusText}`
+            `Network response failed with status: ${response.statusText}`,
           );
         }
         const data: T = await response.json();
         setData(data);
       } catch (error) {
-        if (error instanceof Error && error.name !== "AbortError") {
+        if (error instanceof Error && error.name !== 'AbortError') {
           setError(error.message);
         }
       } finally {

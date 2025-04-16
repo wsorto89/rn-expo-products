@@ -1,5 +1,5 @@
-import { Text, View, StyleSheet } from "react-native";
-import { Colors } from "@/constants/colors";
+import { Text, View, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/colors';
 
 /**
  * @description This screen is used to show the about information of the app.
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     color: Colors.contrast,

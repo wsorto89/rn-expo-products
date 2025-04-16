@@ -1,9 +1,9 @@
-import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, TextInput, View } from "react-native";
-import SmartButton from "@/components/ui/smart-button";
-import { Colors } from "@/constants/colors";
-import BadgeContainer from "@/components/ui/badge-container";
-import { Dispatch, SetStateAction } from "react";
+import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, TextInput, View } from 'react-native';
+import SmartButton from '@/components/ui/smart-button';
+import { Colors } from '@/constants/colors';
+import BadgeContainer from '@/components/ui/badge-container';
+import { Dispatch, SetStateAction } from 'react';
 
 type ProductListFiltersProps = {
   filterText: string;
@@ -30,14 +30,14 @@ const ProductListFilters = ({
       <TextInput
         value={filterText}
         onChangeText={setFilterText}
-        placeholder={"Search products..."}
+        placeholder={'Search products...'}
         style={styles.textFilter}
       />
       <BadgeContainer count={filterCount} containerStyles={{ marginRight: 8 }}>
         <SmartButton
           onPress={handleOpenDrawer}
           backgroundColor={Colors.contrast}
-          accessibilityLabel={"filter"}
+          accessibilityLabel={'filter'}
         >
           <Ionicons name="filter" size={32} color={Colors.icon} />
         </SmartButton>
@@ -48,7 +48,7 @@ const ProductListFilters = ({
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 8,
   },
   textFilter: {

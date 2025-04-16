@@ -1,9 +1,9 @@
-import { RATING_MAX } from "@/utils/ratings";
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import SmartButton from "../ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { ProductFilters } from "@/types";
+import { RATING_MAX } from '@/utils/ratings';
+import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import SmartButton from '../ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { ProductFilters } from '@/types';
 
 const RATING_MIN = 0;
 
@@ -31,13 +31,13 @@ const DrawerContent = ({
   setFilters,
 }: DrawerContentProps) => {
   const [minRating, setMinRating] = useState<string>(
-    filters.minRating !== null ? filters.minRating.toString() : ""
+    filters.minRating !== null ? filters.minRating.toString() : '',
   );
   const [maxPrice, setMaxPrice] = useState<string>(
-    filters.maxPrice !== null ? filters.maxPrice.toString() : ""
+    filters.maxPrice !== null ? filters.maxPrice.toString() : '',
   );
   const [category, setCategory] = useState<string>(
-    filters.category !== null ? filters.category.toString() : ""
+    filters.category !== null ? filters.category.toString() : '',
   );
 
   const handleMinRatingChange = (text: string) => {
@@ -50,7 +50,7 @@ const DrawerContent = ({
     ) {
       setMinRating(text);
     } else {
-      setMinRating("");
+      setMinRating('');
     }
   };
 
@@ -60,14 +60,14 @@ const DrawerContent = ({
     if (!isNaN(parsedValue) && parsedValue >= PRICE_MIN) {
       setMaxPrice(text);
     } else {
-      setMaxPrice("");
+      setMaxPrice('');
     }
   };
 
   const handleClearPress = () => {
-    setMinRating("");
-    setMaxPrice("");
-    setCategory("");
+    setMinRating('');
+    setMaxPrice('');
+    setCategory('');
   };
 
   const handleApplyPress = () => {
@@ -89,14 +89,14 @@ const DrawerContent = ({
         placeholder="Minimum Rating"
         value={minRating}
         onChangeText={handleMinRatingChange}
-        keyboardType={"numeric"}
+        keyboardType={'numeric'}
         style={styles.input}
       />
       <TextInput
         placeholder="Maximum Price ($)"
         value={maxPrice}
         onChangeText={handleMaxPriceChange}
-        keyboardType={"numeric"}
+        keyboardType={'numeric'}
         style={styles.input}
       />
       {/* TODO: Category filter */}
@@ -123,12 +123,12 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     padding: 8,
   },
   buttons: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     gap: 8,
   },
   cancelButton: {

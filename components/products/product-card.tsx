@@ -1,11 +1,11 @@
-import * as Clipboard from "expo-clipboard";
-import { useRouter } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import SmartButton from "@/components/ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { Product } from "@/types";
-import { renderStars } from "@/utils/ratings";
-import { useCartDispatch } from "@/context/cart-context";
+import * as Clipboard from 'expo-clipboard';
+import { useRouter } from 'expo-router';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import SmartButton from '@/components/ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { Product } from '@/types';
+import { renderStars } from '@/utils/ratings';
+import { useCartDispatch } from '@/context/cart-context';
 
 type ProductCardProps = {
   product: Product;
@@ -25,7 +25,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const handleAddToCartPress = () => {
-    cartDispatcher({ type: "ADD_TO_CART", payload: product });
+    cartDispatcher({ type: 'ADD_TO_CART', payload: product });
   };
 
   const copyToClipboard = async () => {
@@ -36,7 +36,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <View style={styles.card}>
       <Pressable
         onPress={copyToClipboard}
-        accessibilityLabel={"Hold down to copy"}
+        accessibilityLabel={'Hold down to copy'}
       >
         <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
           {product.title}
@@ -45,7 +45,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <Image
         source={{ uri: product.image }}
         style={styles.image}
-        resizeMode={"contain"}
+        resizeMode={'contain'}
         accessibilityLabel={product.description}
       />
       <View style={styles.row}>
@@ -86,33 +86,33 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   image: {
     width: 80,
     height: 80,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   ratings: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
   stars: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   price: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   buttons: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 8,
   },
   addToCartText: {

@@ -1,4 +1,4 @@
-import { Product, ProductFilters } from "@/types";
+import { Product, ProductFilters } from '@/types';
 
 /**
  * @description Filter products based on the filter text and other filter inputs
@@ -10,7 +10,7 @@ import { Product, ProductFilters } from "@/types";
 export const filterProducts = (
   products: Product[],
   filterText: string,
-  filters: ProductFilters
+  filters: ProductFilters,
 ) =>
   products.filter(
     (product) =>
@@ -19,5 +19,5 @@ export const filterProducts = (
         product.rating.rate >= filters.minRating) &&
       (filters.maxPrice === null || product.price <= filters.maxPrice) &&
       (filters.category === null ||
-        product.category.toLowerCase() === filters.category.toLowerCase())
+        product.category.toLowerCase() === filters.category.toLowerCase()),
   );

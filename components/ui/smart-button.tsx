@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
   Platform,
   Pressable,
@@ -6,8 +6,8 @@ import {
   StyleSheet,
   View,
   ViewStyle,
-} from "react-native";
-import { Colors } from "@/constants/colors";
+} from 'react-native';
+import { Colors } from '@/constants/colors';
 
 type SmartButtonProps = PressableProps & {
   rippleColor?: string;
@@ -41,7 +41,7 @@ const SmartButton = ({
     <View style={styles.parent}>
       <Pressable
         android_ripple={
-          Platform.OS === "android"
+          Platform.OS === 'android'
             ? { color: rippleColor, borderless: false }
             : undefined
         }
@@ -50,7 +50,7 @@ const SmartButton = ({
           disabled ? styles.disabled : null,
           {
             backgroundColor:
-              pressed && Platform.OS === "ios" && !disabled
+              pressed && Platform.OS === 'ios' && !disabled
                 ? rippleColor
                 : backgroundColor,
           },

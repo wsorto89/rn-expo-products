@@ -1,6 +1,6 @@
-import { View, StyleSheet } from "react-native";
-import { Link, Stack } from "expo-router";
-import { Colors } from "@/constants/colors";
+import { View, StyleSheet } from 'react-native';
+import { Link, Stack } from 'expo-router';
+import { Colors } from '@/constants/colors';
 
 /**
  * @description This file is used to display a 404 Not Found screen.
@@ -10,7 +10,7 @@ import { Colors } from "@/constants/colors";
 const NotFoundScreen = () => {
   return (
     <>
-      <Stack.Screen options={{ title: "Oops! Not Found" }} />
+      <Stack.Screen options={{ title: 'Oops! Not Found' }} />
       <View style={styles.container}>
         <Link href="/" style={styles.button}>
           Go back to Home screen!
@@ -24,13 +24,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   button: {
     fontSize: 20,
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
     color: Colors.contrast,
   },
 });

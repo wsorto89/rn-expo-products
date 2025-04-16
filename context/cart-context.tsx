@@ -1,30 +1,30 @@
-import { CartItem, Product } from "@/types";
-import React, { createContext, Dispatch, useContext, useReducer } from "react";
+import { CartItem, Product } from '@/types';
+import React, { createContext, Dispatch, useContext, useReducer } from 'react';
 
 type CartState = { cartItems: Map<number, CartItem> };
 
 type CartAction =
-  | { type: "ADD_TO_CART"; payload: Product }
-  | { type: "DECREMENT_FROM_CART"; payload: number }
-  | { type: "REMOVE_FROM_CART"; payload: number }
-  | { type: "CLEAR_CART" };
+  | { type: 'ADD_TO_CART'; payload: Product }
+  | { type: 'DECREMENT_FROM_CART'; payload: number }
+  | { type: 'REMOVE_FROM_CART'; payload: number }
+  | { type: 'CLEAR_CART' };
 
 export const CartStateContext = createContext<CartState | null>(null);
 
 export const CartDispatchContext = createContext<Dispatch<CartAction> | null>(
-  null
+  null,
 );
 
 const cartReducer = (state: CartState, action: CartAction) => {
   switch (action.type) {
-    case "ADD_TO_CART": {
+    case 'ADD_TO_CART': {
       const updatedItems = new Map(state.cartItems);
       const item = action.payload;
       const currentQuantity = updatedItems.get(item.id)?.quantity || 0;
       updatedItems.set(item.id, { ...item, quantity: currentQuantity + 1 });
       return { ...state, cartItems: updatedItems };
     }
-    case "DECREMENT_FROM_CART": {
+    case 'DECREMENT_FROM_CART': {
       const updatedItems = new Map(state.cartItems);
       const itemId = action.payload;
       const currentQuantity = updatedItems.get(itemId)?.quantity || 0;
@@ -38,12 +38,12 @@ const cartReducer = (state: CartState, action: CartAction) => {
       }
       return { ...state, cartItems: updatedItems };
     }
-    case "REMOVE_FROM_CART":
+    case 'REMOVE_FROM_CART':
       const updatedItems = new Map(state.cartItems);
       const itemId = action.payload;
       updatedItems.delete(itemId);
       return { ...state, cartItems: updatedItems };
-    case "CLEAR_CART":
+    case 'CLEAR_CART':
       return { ...state, cartItems: new Map<number, CartItem>() };
     default:
       throw new Error(`Unhandled action type: ${JSON.stringify(action)}`);
@@ -75,7 +75,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 export const useCartState = () => {
   const context = useContext(CartStateContext);
   if (!context)
-    throw new Error("useCartState must be used within a CartProvider");
+    throw new Error('useCartState must be used within a CartProvider');
   return context;
 };
 
@@ -87,7 +87,7 @@ export const useCartState = () => {
 export const useCartDispatch = () => {
   const context = useContext(CartDispatchContext);
   if (!context)
-    throw new Error("useCartDispatch must be used within a CartProvider");
+    throw new Error('useCartDispatch must be used within a CartProvider');
   return context;
 };
 
