@@ -34,12 +34,8 @@ const ProductListFilters = ({
         style={styles.textFilter}
       />
       <BadgeContainer count={filterCount} containerStyles={{ marginRight: 8 }}>
-        <SmartButton
-          onPress={handleOpenDrawer}
-          backgroundColor={Colors.contrast}
-          accessibilityLabel={'filter'}
-        >
-          <Ionicons name="filter" size={32} color={Colors.icon} />
+        <SmartButton onPress={handleOpenDrawer} accessibilityLabel={'filter'}>
+          <Ionicons name="filter" size={32} color={Colors.text} />
         </SmartButton>
       </BadgeContainer>
     </View>
@@ -55,7 +51,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 4,
     paddingLeft: 8,
-    backgroundColor: Colors.contrast,
+    backgroundColor: Colors.foreground,
+    color: Colors.text,
     flex: 1,
     marginLeft: 12,
   },

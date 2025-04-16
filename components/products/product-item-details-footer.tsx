@@ -69,12 +69,12 @@ const ProductItemDetailsFooter = ({
 
   const renderLeftActions = () => (
     <View style={styles.swipeAction}>
-      <Text>Previous</Text>
+      <Text style={styles.text}>Previous</Text>
     </View>
   );
   const renderRightActions = () => (
     <View style={styles.swipeAction}>
-      <Text>Next</Text>
+      <Text style={styles.text}>Next</Text>
     </View>
   );
 
@@ -89,9 +89,9 @@ const ProductItemDetailsFooter = ({
         <View style={styles.row}>
           <View style={styles.footerSide}>
             <SmartButton style={styles.circleButton} onPress={onSwipeLeft}>
-              <AntDesign name="leftcircleo" size={36} />
+              <AntDesign name="leftcircleo" size={36} color={Colors.text} />
             </SmartButton>
-            <Text style={styles.price}>${curProduct.price}</Text>
+            <Text style={[styles.price, styles.text]}>${curProduct.price}</Text>
           </View>
           <View style={styles.footerSide}>
             <SmartButton
@@ -101,7 +101,7 @@ const ProductItemDetailsFooter = ({
               <Text style={styles.addToCartText}>Add to Cart</Text>
             </SmartButton>
             <SmartButton style={styles.circleButton} onPress={onSwipeRight}>
-              <AntDesign name="rightcircleo" size={36} />
+              <AntDesign name="rightcircleo" size={36} color={Colors.text} />
             </SmartButton>
           </View>
         </View>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 16,
-    backgroundColor: Colors.contrast,
+    backgroundColor: Colors.foreground,
     borderTopWidth: 2,
     borderColor: Colors.lowContrast,
   },
@@ -141,6 +141,10 @@ const styles = StyleSheet.create({
   swipeAction: {
     justifyContent: 'center',
     padding: 4,
+    backgroundColor: Colors.background,
+  },
+  text: {
+    color: Colors.text,
   },
 });
 

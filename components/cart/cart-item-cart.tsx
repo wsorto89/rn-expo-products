@@ -32,7 +32,11 @@ const CartCard = ({ item }: CartCardProps) => {
   return (
     <View style={styles.item}>
       <View style={styles.itemDetails}>
-        <Text style={styles.itemTitle} numberOfLines={2} ellipsizeMode="tail">
+        <Text
+          style={[styles.itemTitle, styles.text]}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
           {item.title}
         </Text>
         <Image
@@ -41,26 +45,26 @@ const CartCard = ({ item }: CartCardProps) => {
           resizeMode={'contain'}
           accessibilityLabel={item.description}
         />
-        <Text>${item.price}</Text>
+        <Text style={styles.text}>${item.price}</Text>
       </View>
       <View style={styles.itemDetails}>
-        <Text>Quantity</Text>
-        <Text>{item.quantity}</Text>
+        <Text style={styles.text}>Quantity</Text>
+        <Text style={styles.text}>{item.quantity}</Text>
         <View style={styles.buttonArea}>
           <SmartButton
             onPress={handleIncrement}
             accessibilityLabel={'increment'}
           >
-            <Ionicons name="caret-up" size={32} color={Colors.icon} />
+            <Ionicons name="caret-up" size={32} color={Colors.text} />
           </SmartButton>
           <SmartButton
             onPress={handleDecrement}
             accessibilityLabel={'decrement'}
           >
-            <Ionicons name="caret-down" size={32} color={Colors.icon} />
+            <Ionicons name="caret-down" size={32} color={Colors.text} />
           </SmartButton>
           <SmartButton onPress={handleRemove} accessibilityLabel={'remove'}>
-            <Ionicons name="trash" size={32} color={Colors.icon} />
+            <Ionicons name="trash" size={32} color={Colors.text} />
           </SmartButton>
         </View>
       </View>
@@ -71,7 +75,7 @@ const CartCard = ({ item }: CartCardProps) => {
 const styles = StyleSheet.create({
   item: {
     gap: 16,
-    backgroundColor: Colors.contrast,
+    backgroundColor: Colors.foreground,
     padding: 16,
     borderRadius: 8,
     flexDirection: 'row',
@@ -92,6 +96,9 @@ const styles = StyleSheet.create({
   buttonArea: {
     flexDirection: 'row',
     gap: 8,
+  },
+  text: {
+    color: Colors.text,
   },
 });
 

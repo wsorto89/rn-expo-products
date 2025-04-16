@@ -84,25 +84,25 @@ const DrawerContent = ({
 
   return (
     <View style={styles.container}>
-      <Text>Filters</Text>
+      <Text style={styles.text}>Filters</Text>
       <TextInput
         placeholder="Minimum Rating"
         value={minRating}
         onChangeText={handleMinRatingChange}
         keyboardType={'numeric'}
-        style={styles.input}
+        style={[styles.input, styles.text]}
       />
       <TextInput
         placeholder="Maximum Price ($)"
         value={maxPrice}
         onChangeText={handleMaxPriceChange}
         keyboardType={'numeric'}
-        style={styles.input}
+        style={[styles.input, styles.text]}
       />
       {/* TODO: Category filter */}
       <View style={styles.buttons}>
         <SmartButton onPress={handleClearPress} style={styles.cancelButton}>
-          <Text>Clear</Text>
+          <Text style={styles.text}>Clear</Text>
         </SmartButton>
         <SmartButton
           onPress={handleApplyPress}
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     gap: 16,
+    backgroundColor: Colors.background,
   },
   input: {
     borderWidth: 1,
@@ -133,9 +134,13 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     borderWidth: 2,
+    backgroundColor: Colors.background,
   },
   applyButton: {
     color: Colors.contrast,
+  },
+  text: {
+    color: Colors.text,
   },
 });
 

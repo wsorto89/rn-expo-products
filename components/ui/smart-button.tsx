@@ -30,7 +30,7 @@ type SmartButtonProps = PressableProps & {
 const SmartButton = ({
   onPress,
   rippleColor = Colors.lowContrast,
-  backgroundColor = Colors.contrast,
+  backgroundColor = Colors.foreground,
   style,
   children,
   disabled = false,
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 4,
     padding: 8,
+    borderColor: Colors.text,
   },
   disabled: {
     opacity: 0.5,

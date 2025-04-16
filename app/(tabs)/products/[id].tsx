@@ -44,7 +44,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+    <View style={styles.container}>
       {isLoading ? (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator color={Colors.highlight} size={72} />
@@ -52,7 +52,7 @@ const ProductDetails = () => {
       ) : (
         <>
           <ScrollView
-            style={styles.container}
+            style={styles.scrollView}
             contentContainerStyle={{
               padding: 16,
             }}
@@ -62,24 +62,28 @@ const ProductDetails = () => {
                 onPress={copyToClipboard}
                 accessibilityLabel={'Hold down to copy'}
               >
-                <Text style={styles.title}>{curProduct.title}</Text>
+                <Text style={[styles.title, styles.text]}>
+                  {curProduct.title}
+                </Text>
               </Pressable>
               <Image
                 source={{ uri: curProduct.image }}
                 style={styles.image}
                 resizeMode={'contain'}
               />
-              <Text>{curProduct.description}</Text>
+              <Text style={styles.text}>{curProduct.description}</Text>
             </View>
             <View style={styles.area}>
               <View style={styles.row}>
-                <Text style={styles.category}>{curProduct.category}</Text>
+                <Text style={[styles.category, styles.text]}>
+                  {curProduct.category}
+                </Text>
                 <View style={styles.ratings}>
-                  <Text>{curProduct.rating.rate}</Text>
+                  <Text style={styles.text}>{curProduct.rating.rate}</Text>
                   <View style={styles.stars}>
                     {renderStars(curProduct.rating.rate)}
                   </View>
-                  <Text>({curProduct.rating.count})</Text>
+                  <Text style={styles.text}>({curProduct.rating.count})</Text>
                 </View>
               </View>
             </View>
@@ -96,14 +100,21 @@ const ProductDetails = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  text: {
+    color: Colors.text,
+  },
   loadingOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.background,
   },
-  container: {
-    backgroundColor: Colors.contrast,
+  scrollView: {
+    backgroundColor: Colors.foreground,
     flex: 1,
   },
   area: {
@@ -118,6 +129,7 @@ const styles = StyleSheet.create({
     width: 240,
     height: 240,
     alignSelf: 'center',
+    backgroundColor: 'white',
   },
   row: {
     flexDirection: 'row',

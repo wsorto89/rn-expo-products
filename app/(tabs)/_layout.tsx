@@ -19,7 +19,7 @@ const TabLayout = () => {
     <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: 'green',
+          backgroundColor: Colors.background,
         },
         headerShadowVisible: false,
         tabBarActiveTintColor: Colors.highlight,
@@ -87,6 +87,26 @@ const TabLayout = () => {
                 size={24}
               />
             </BadgeContainer>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          headerShown: false,
+          title: 'Settings',
+          tabBarIcon: ({
+            color,
+            focused,
+          }: {
+            color: string;
+            focused: boolean;
+          }) => (
+            <Ionicons
+              name={focused ? 'settings' : 'settings-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />

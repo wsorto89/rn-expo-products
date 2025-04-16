@@ -1,9 +1,10 @@
 import { Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { Settings, StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/colors';
 import { CartProvider } from '@/context/cart-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SettingsProvider } from '@/context/settings-context';
 
 /**
  * @description This is the root layout for the app.
@@ -14,18 +15,20 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
  */
 const RootLayout = () => {
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.app}>
-        <GestureHandlerRootView>
-          <CartProvider>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </CartProvider>
-        </GestureHandlerRootView>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <SettingsProvider>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.app}>
+          <GestureHandlerRootView>
+            <CartProvider>
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </CartProvider>
+          </GestureHandlerRootView>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </SettingsProvider>
   );
 };
 

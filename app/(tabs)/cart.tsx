@@ -24,28 +24,28 @@ const Cart = () => {
   );
   const [refreshing, setRefreshing] = useState(false);
 
+  const clearCart = () => {
+    cartDispatcher({ type: 'CLEAR_CART' });
+  };
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       clearCart();
       setRefreshing(false);
     }, 2000);
-  }, []);
-
-  const clearCart = () => {
-    cartDispatcher({ type: 'CLEAR_CART' });
-  };
+  }, [clearCart]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.totals}>
+      <Text style={[styles.totals, styles.text]}>
         Total Item(s): {totalItems}, Total Cost: ${totalPrice.toFixed(2)}
       </Text>
       {cartItems.size === 0 ? (
-        <Text style={styles.emptyCart}>Your cart is empty</Text>
+        <Text style={[styles.emptyCart, styles.text]}>Your cart is empty</Text>
       ) : (
         <>
-          <Text style={[styles.emptyCart, { marginBottom: 8 }]}>
+          <Text style={[styles.emptyCart, styles.text, { marginBottom: 8 }]}>
             Pull down to clear cart
           </Text>
           <FlatList
@@ -84,13 +84,11 @@ const styles = StyleSheet.create({
   emptyCart: {
     textAlign: 'center',
     fontSize: 18,
-    color: Colors.contrast,
   },
   totals: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: Colors.contrast,
     textAlign: 'center',
   },
   clearButton: {
@@ -100,6 +98,9 @@ const styles = StyleSheet.create({
   clear: {
     color: Colors.contrast,
     fontWeight: 'bold',
+  },
+  text: {
+    color: Colors.text,
   },
 });
 
