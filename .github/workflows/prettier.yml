@@ -1,0 +1,39 @@
+name: Prettier Check
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.json"
+      - "**/*.md"
+  pull_request:
+    paths:
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.json"
+      - "**/*.md"
+
+jobs:
+  prettier:
+    name: Run Prettier
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout project repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup Node + install deps
+        uses: ./.github/actions/setup-node-install
+
+      - name: 🔧 Run Prettier Check
+        run: npm run prettier -- --check .

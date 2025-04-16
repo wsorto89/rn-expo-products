@@ -1,0 +1,25 @@
+name: Lint TS (eslint, prettier)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint TS (eslint, prettier)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout project repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup Node + install deps
+        uses: ./.github/actions/setup-node-install
+
+      - name: 🏃‍♂️ Run ESLint PR
+        if: github.event_name != 'pull_request'
+        run: npm run lint
