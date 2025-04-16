@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
-import ProductList from "@/app/(tabs)/products";
-import { ProductContext } from "@/context/product-context";
-import { CartDispatchContext } from "@/context/cart-context";
-import { Product } from "@/types";
+import React, { useState } from 'react';
+import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import ProductList from '@/app/(tabs)/products';
+import { ProductContext } from '@/context/product-context';
+import { CartDispatchContext } from '@/context/cart-context';
+import { Product } from '@/types';
 
-jest.mock("react-native-drawer-layout", () => {
+jest.mock('react-native-drawer-layout', () => {
   return {
     __esModule: true,
     Drawer: ({
@@ -26,11 +26,11 @@ jest.mock("react-native-drawer-layout", () => {
 const mockProducts = [
   {
     id: 1,
-    title: "Test Product",
-    description: "Test Description",
+    title: 'Test Product',
+    description: 'Test Description',
     price: 10,
-    image: "https://via.placeholder.com/150",
-    category: "electronics",
+    image: 'https://via.placeholder.com/150',
+    category: 'electronics',
     rating: { rate: 4.5, count: 100 },
   },
 ];
@@ -59,8 +59,8 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Product List", () => {
-  test("loading indicator appears initially and then disappears", async () => {
+describe('Product List', () => {
+  test('loading indicator appears initially and then disappears', async () => {
     // Arrange
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
@@ -69,15 +69,15 @@ describe("Product List", () => {
     const { getByTestId, queryByTestId } = renderWithProviders();
 
     // Assert
-    expect(getByTestId("loading-spinner")).toBeTruthy();
+    expect(getByTestId('loading-spinner')).toBeTruthy();
 
     // Loading indicator should disappear after fetch
     await waitFor(() => {
-      expect(queryByTestId("loading-spinner")).toBeNull();
+      expect(queryByTestId('loading-spinner')).toBeNull();
     });
   });
 
-  test("displays product after fetching", async () => {
+  test('displays product after fetching', async () => {
     // Arrange
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
@@ -86,10 +86,10 @@ describe("Product List", () => {
     const { getByText } = renderWithProviders();
 
     // Assert
-    await waitFor(() => expect(getByText("Test Product")).toBeTruthy());
+    await waitFor(() => expect(getByText('Test Product')).toBeTruthy());
   });
 
-  test("filters product list by text input", async () => {
+  test('filters product list by text input', async () => {
     // Arrange
     jest.useFakeTimers();
 
@@ -99,26 +99,26 @@ describe("Product List", () => {
     });
     const { getByPlaceholderText, queryByText } = renderWithProviders();
 
-    await waitFor(() => expect(queryByText("Test Product")).toBeTruthy());
-    const input = getByPlaceholderText("Search products...");
+    await waitFor(() => expect(queryByText('Test Product')).toBeTruthy());
+    const input = getByPlaceholderText('Search products...');
 
     // Act
-    fireEvent.changeText(input, "non-existent");
+    fireEvent.changeText(input, 'non-existent');
 
     await act(async () => {
       jest.runAllTimers();
     });
 
     // Assert
-    await waitFor(() => expect(queryByText("Test Product")).toBeNull());
-    expect(queryByText("Try adjusting filters")).toBeTruthy();
+    await waitFor(() => expect(queryByText('Test Product')).toBeNull());
+    expect(queryByText('Try adjusting filters')).toBeTruthy();
 
     jest.useRealTimers();
   });
 
-  test("displays error on fetch failure", async () => {
+  test('displays error on fetch failure', async () => {
     // Arrange
-    (fetch as jest.Mock).mockRejectedValueOnce(new Error("Fetch failed"));
+    (fetch as jest.Mock).mockRejectedValueOnce(new Error('Fetch failed'));
 
     // Assert
     const { findByText } = renderWithProviders();
@@ -136,11 +136,11 @@ describe("Product List", () => {
 
     // Assert
     await waitFor(() =>
-      expect(getByText("No products available")).toBeTruthy()
+      expect(getByText('No products available')).toBeTruthy(),
     );
   });
 
-  test("opens drawer on filter button press", async () => {
+  test('opens drawer on filter button press', async () => {
     // Arrange
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
@@ -148,15 +148,15 @@ describe("Product List", () => {
     });
     const { getByLabelText, getByPlaceholderText, getByText } =
       renderWithProviders();
-    await waitFor(() => getByPlaceholderText("Search products..."));
+    await waitFor(() => getByPlaceholderText('Search products...'));
 
     // Act
-    const button = getByLabelText("filter");
+    const button = getByLabelText('filter');
     fireEvent.press(button);
 
     // Assert: DrawerContent is visible
     await waitFor(() => {
-      expect(getByText("Filters")).toBeTruthy(); // Or any unique text inside the drawer
+      expect(getByText('Filters')).toBeTruthy(); // Or any unique text inside the drawer
     });
   });
 });

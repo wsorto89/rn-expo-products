@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
-import { Colors } from "@/constants/colors";
-import { useCart } from "@/context/cart-context";
-import CartCard from "@/components/cart/cart-item-cart";
-import SmartButton from "@/components/ui/smart-button";
+import React, { useCallback, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '@/constants/colors';
+import { useCart } from '@/context/cart-context';
+import CartCard from '@/components/cart/cart-item-cart';
+import SmartButton from '@/components/ui/smart-button';
 
 /**
  * @description This component displays the cart items and their total cost.
@@ -16,11 +16,11 @@ const Cart = () => {
   } = useCart();
   const totalItems = Array.from(cartItems.values()).reduce(
     (total, item) => total + item.quantity,
-    0
+    0,
   );
   const totalPrice = Array.from(cartItems.values()).reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
   const [refreshing, setRefreshing] = useState(false);
 
@@ -33,7 +33,7 @@ const Cart = () => {
   }, []);
 
   const clearCart = () => {
-    cartDispatcher({ type: "CLEAR_CART" });
+    cartDispatcher({ type: 'CLEAR_CART' });
   };
 
   return (
@@ -56,9 +56,9 @@ const Cart = () => {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            testID={"flat-list"}
-            accessibilityRole={"list"}
-            accessibilityLabel={"Cart items list"}
+            testID={'flat-list'}
+            accessibilityRole={'list'}
+            accessibilityLabel={'Cart items list'}
           />
         </>
       )}
@@ -79,27 +79,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     padding: 16,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   emptyCart: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 18,
     color: Colors.contrast,
   },
   totals: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16,
     color: Colors.contrast,
-    textAlign: "center",
+    textAlign: 'center',
   },
   clearButton: {
     marginTop: 16,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   clear: {
     color: Colors.contrast,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 

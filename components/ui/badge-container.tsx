@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { Colors } from "@/constants/colors";
-import { PropsWithChildren } from "react";
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Colors } from '@/constants/colors';
+import { PropsWithChildren } from 'react';
 
 type BadgeContainerProps = {
   count: number;
@@ -37,7 +37,7 @@ const BadgeContainer = ({
 
 const styles = StyleSheet.create({
   badgeContainer: {
-    position: "relative",
+    position: 'relative',
   },
   badge: {
     backgroundColor: Colors.highlight,
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 1,
     borderRadius: 10,
-    position: "absolute",
+    position: 'absolute',
     right: -4,
     bottom: -8,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   badgeText: {
     color: Colors.contrast,

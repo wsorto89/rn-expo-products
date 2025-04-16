@@ -1,9 +1,9 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import SmartButton from "@/components/ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { useCartDispatch } from "@/context/cart-context";
-import { CartItem } from "@/types";
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import SmartButton from '@/components/ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { useCartDispatch } from '@/context/cart-context';
+import { CartItem } from '@/types';
 
 type CartCardProps = {
   item: CartItem;
@@ -18,15 +18,15 @@ const CartCard = ({ item }: CartCardProps) => {
   const cartDispatcher = useCartDispatch();
 
   const handleIncrement = () => {
-    cartDispatcher({ type: "ADD_TO_CART", payload: item });
+    cartDispatcher({ type: 'ADD_TO_CART', payload: item });
   };
 
   const handleDecrement = () => {
-    cartDispatcher({ type: "DECREMENT_FROM_CART", payload: item.id });
+    cartDispatcher({ type: 'DECREMENT_FROM_CART', payload: item.id });
   };
 
   const handleRemove = () => {
-    cartDispatcher({ type: "REMOVE_FROM_CART", payload: item.id });
+    cartDispatcher({ type: 'REMOVE_FROM_CART', payload: item.id });
   };
 
   return (
@@ -38,7 +38,7 @@ const CartCard = ({ item }: CartCardProps) => {
         <Image
           source={{ uri: item.image }}
           style={styles.itemImage}
-          resizeMode={"contain"}
+          resizeMode={'contain'}
           accessibilityLabel={item.description}
         />
         <Text>${item.price}</Text>
@@ -49,17 +49,17 @@ const CartCard = ({ item }: CartCardProps) => {
         <View style={styles.buttonArea}>
           <SmartButton
             onPress={handleIncrement}
-            accessibilityLabel={"increment"}
+            accessibilityLabel={'increment'}
           >
             <Ionicons name="caret-up" size={32} color={Colors.icon} />
           </SmartButton>
           <SmartButton
             onPress={handleDecrement}
-            accessibilityLabel={"decrement"}
+            accessibilityLabel={'decrement'}
           >
             <Ionicons name="caret-down" size={32} color={Colors.icon} />
           </SmartButton>
-          <SmartButton onPress={handleRemove} accessibilityLabel={"remove"}>
+          <SmartButton onPress={handleRemove} accessibilityLabel={'remove'}>
             <Ionicons name="trash" size={32} color={Colors.icon} />
           </SmartButton>
         </View>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.contrast,
     padding: 16,
     borderRadius: 8,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   itemTitle: {
     fontSize: 18,
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     height: 100,
   },
   itemDetails: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
     flex: 1,
   },
   buttonArea: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 8,
   },
 });

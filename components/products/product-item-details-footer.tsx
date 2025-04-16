@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
-import SmartButton from "@/components/ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { useCartDispatch } from "@/context/cart-context";
-import { useProductContext } from "@/context/product-context";
+import { StyleSheet, Text, View } from 'react-native';
+import SmartButton from '@/components/ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { useCartDispatch } from '@/context/cart-context';
+import { useProductContext } from '@/context/product-context';
 import ReanimatedSwipeable, {
   SwipeableMethods,
-} from "react-native-gesture-handler/ReanimatedSwipeable";
-import { useRouter } from "expo-router";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { Dispatch, SetStateAction, useRef } from "react";
-import { Product } from "@/types";
+} from 'react-native-gesture-handler/ReanimatedSwipeable';
+import { useRouter } from 'expo-router';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { Dispatch, SetStateAction, useRef } from 'react';
+import { Product } from '@/types';
 
 type ProductItemDetailsFooterProps = {
   curProduct: Product;
@@ -34,7 +34,7 @@ const ProductItemDetailsFooter = ({
   const swipeableRef = useRef<SwipeableMethods | null>(null);
 
   const handleAddToCartPress = () => {
-    cartDispatcher({ type: "ADD_TO_CART", payload: curProduct });
+    cartDispatcher({ type: 'ADD_TO_CART', payload: curProduct });
   };
 
   const onSwipeLeft = () => {
@@ -49,13 +49,13 @@ const ProductItemDetailsFooter = ({
     }
   };
 
-  const onSwipeableOpen = (direction: "left" | "right") => {
+  const onSwipeableOpen = (direction: 'left' | 'right') => {
     setIsLoading(true);
 
     setTimeout(() => {
-      if (direction === "left") {
+      if (direction === 'left') {
         onSwipeLeft();
-      } else if (direction === "right") {
+      } else if (direction === 'right') {
         onSwipeRight();
       }
 
@@ -112,13 +112,13 @@ const ProductItemDetailsFooter = ({
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   price: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   footer: {
     padding: 16,
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.lowContrast,
   },
   footerSide: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 4,
   },
   circleButton: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     color: Colors.contrast,
   },
   swipeAction: {
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 4,
   },
 });

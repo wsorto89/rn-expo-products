@@ -1,9 +1,9 @@
-import { RATING_MAX } from "@/utils/ratings";
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import SmartButton from "../ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { ProductFilters } from "@/types";
+import { RATING_MAX } from '@/utils/ratings';
+import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import SmartButton from '../ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { ProductFilters } from '@/types';
 
 const RATING_MIN = 0;
 
@@ -25,10 +25,20 @@ type DrawerContentProps = {
  * @param {ProductFilters} props.filters - The current filters applied to the product list.
  * @param {(filters: ProductFilters) => void} props.setFilters - Function to update the filters.
  */
-const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => {
-  const [minRating, setMinRating] = useState<string>(filters.minRating !== null ? filters.minRating.toString() : "");
-  const [maxPrice, setMaxPrice] = useState<string>(filters.maxPrice !== null ? filters.maxPrice.toString() : "");
-  const [category, setCategory] = useState<string>(filters.category !== null ? filters.category.toString() : "");
+const DrawerContent = ({
+  onClose,
+  filters,
+  setFilters,
+}: DrawerContentProps) => {
+  const [minRating, setMinRating] = useState<string>(
+    filters.minRating !== null ? filters.minRating.toString() : '',
+  );
+  const [maxPrice, setMaxPrice] = useState<string>(
+    filters.maxPrice !== null ? filters.maxPrice.toString() : '',
+  );
+  const [category, setCategory] = useState<string>(
+    filters.category !== null ? filters.category.toString() : '',
+  );
 
   const handleMinRatingChange = (text: string) => {
     const parsedValue = parseFloat(text);
@@ -40,7 +50,7 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
     ) {
       setMinRating(text);
     } else {
-      setMinRating("");
+      setMinRating('');
     }
   };
 
@@ -50,14 +60,14 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
     if (!isNaN(parsedValue) && parsedValue >= PRICE_MIN) {
       setMaxPrice(text);
     } else {
-      setMaxPrice("");
+      setMaxPrice('');
     }
   };
 
   const handleClearPress = () => {
-    setMinRating("");
-    setMaxPrice("");
-    setCategory("");
+    setMinRating('');
+    setMaxPrice('');
+    setCategory('');
   };
 
   const handleApplyPress = () => {
@@ -79,17 +89,17 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
         placeholder="Minimum Rating"
         value={minRating}
         onChangeText={handleMinRatingChange}
-        keyboardType={"numeric"}
+        keyboardType={'numeric'}
         style={styles.input}
       />
       <TextInput
         placeholder="Maximum Price ($)"
         value={maxPrice}
         onChangeText={handleMaxPriceChange}
-        keyboardType={"numeric"}
+        keyboardType={'numeric'}
         style={styles.input}
       />
-      { /* TODO: Category filter */}
+      {/* TODO: Category filter */}
       <View style={styles.buttons}>
         <SmartButton onPress={handleClearPress} style={styles.cancelButton}>
           <Text>Clear</Text>
@@ -113,12 +123,12 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     padding: 8,
   },
   buttons: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     gap: 8,
   },
   cancelButton: {

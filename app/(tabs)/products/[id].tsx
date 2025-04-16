@@ -1,4 +1,4 @@
-import * as Clipboard from "expo-clipboard";
+import * as Clipboard from 'expo-clipboard';
 import {
   ActivityIndicator,
   Image,
@@ -7,14 +7,14 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { Colors } from "@/constants/colors";
-import { useProductContext } from "@/context/product-context";
-import { renderStars } from "@/utils/ratings";
-import NoProduct from "@/components/products/no-product";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
-import ProductItemDetailsFooter from "@/components/products/product-item-details-footer";
+} from 'react-native';
+import { Colors } from '@/constants/colors';
+import { useProductContext } from '@/context/product-context';
+import { renderStars } from '@/utils/ratings';
+import NoProduct from '@/components/products/no-product';
+import { useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
+import ProductItemDetailsFooter from '@/components/products/product-item-details-footer';
 
 /**
  * @description This component displays the details of a selected product.
@@ -28,7 +28,7 @@ const ProductDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const currentIndex = products.findIndex(
-    (item) => item.id.toString() === productId
+    (item) => item.id.toString() === productId,
   );
   const curProduct = products[currentIndex];
 
@@ -44,7 +44,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "space-between" }}>
+    <View style={{ flex: 1, justifyContent: 'space-between' }}>
       {isLoading ? (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator color={Colors.highlight} size={72} />
@@ -60,14 +60,14 @@ const ProductDetails = () => {
             <View style={styles.area}>
               <Pressable
                 onPress={copyToClipboard}
-                accessibilityLabel={"Hold down to copy"}
+                accessibilityLabel={'Hold down to copy'}
               >
                 <Text style={styles.title}>{curProduct.title}</Text>
               </Pressable>
               <Image
                 source={{ uri: curProduct.image }}
                 style={styles.image}
-                resizeMode={"contain"}
+                resizeMode={'contain'}
               />
               <Text>{curProduct.description}</Text>
             </View>
@@ -98,8 +98,8 @@ const ProductDetails = () => {
 const styles = StyleSheet.create({
   loadingOverlay: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: Colors.background,
   },
   container: {
@@ -111,33 +111,33 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   image: {
     width: 240,
     height: 240,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   category: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   ratings: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
   stars: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   price: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 
