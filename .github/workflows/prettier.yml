@@ -1,4 +1,4 @@
-name: Prettier Check
+name: Prettier Check and Auto-Fix
 
 on:
   push:
@@ -23,22 +23,34 @@ on:
 
 jobs:
   prettier:
-    name: Run Prettier
+    name: Run Prettier and Commit Changes
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout project repo
+      - name: 📦 Checkout project repo
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
+      - name: 📦 Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: "22"
 
-      - name: Install Dependencies
+      - name: 🔧 Install dependencies
         run: npm ci
 
-      - name: 🔧 Run Prettier Check
-        run: npm run prettier -- --check .
+      - name: 🔧 Run Prettier (Auto-fix)
+        run: npm run prettier -- --write .
+
+      - name: 🔧 Commit and push Prettier fixes
+        run: |
+          # Check if Prettier made any changes
+          git diff --exit-code || (
+            echo "Changes detected by Prettier, committing and pushing changes" &&
+            git config --global user.name "GitHub Actions" &&
+            git config --global user.email "actions@github.com" &&
+            git add . &&
+            git commit -m "fix: apply Prettier formatting" &&
+            git push origin ${{ github.ref }}
+          )
