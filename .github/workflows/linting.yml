@@ -1,4 +1,4 @@
-name: Lint TS (eslint, prettier)
+name: Lint TS (eslint)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Lint TS (eslint, prettier)
+    name: Lint TS (eslint)
     runs-on: ubuntu-latest
 
     steps:
