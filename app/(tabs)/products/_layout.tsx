@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { ProductProvider } from '@/context/product-context';
+import { Colors } from '@/constants/colors';
 
 /**
  * @description This component provides a layout for the products section of the app.
@@ -12,10 +13,23 @@ const ProductsLayout = () => {
   return (
     <ProductProvider>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="[id]"
-          options={{ headerShown: true, title: 'Product Detail' }}
+          options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: Colors.background },
+            headerTintColor: Colors.text,
+            headerTitleStyle: {
+              color: Colors.text,
+            },
+            title: 'Product Detail',
+          }}
         />
       </Stack>
     </ProductProvider>

@@ -40,7 +40,7 @@ const ProductList = () => {
     if (data) {
       setProducts(data);
     }
-  }, [data]);
+  }, [data, setProducts]);
 
   // Using a custom hook to debounce the filter text input
   // This helps to reduce the number of re-renders
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   emptyList: {
-    color: Colors.contrast,
+    color: Colors.text,
     textAlign: 'center',
     marginTop: 16,
   },

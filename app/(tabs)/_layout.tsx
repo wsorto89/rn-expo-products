@@ -19,7 +19,7 @@ const TabLayout = () => {
     <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: 'green',
+          backgroundColor: Colors.background,
         },
         headerShadowVisible: false,
         tabBarActiveTintColor: Colors.highlight,

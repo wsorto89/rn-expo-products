@@ -38,7 +38,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         onPress={copyToClipboard}
         accessibilityLabel={'Hold down to copy'}
       >
-        <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+        <Text
+          style={[styles.title, styles.text]}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
           {product.title}
         </Text>
       </Pressable>
@@ -49,21 +53,21 @@ const ProductCard = ({ product }: ProductCardProps) => {
         accessibilityLabel={product.description}
       />
       <View style={styles.row}>
-        <Text>{product.category}</Text>
+        <Text style={styles.text}>{product.category}</Text>
         <View style={styles.ratings}>
-          <Text>{product.rating.rate}</Text>
+          <Text style={styles.text}>{product.rating.rate}</Text>
           <View style={styles.stars}>{renderStars(product.rating.rate)}</View>
-          <Text>({product.rating.count})</Text>
+          <Text style={styles.text}>({product.rating.count})</Text>
         </View>
       </View>
       <View style={styles.row}>
-        <Text style={styles.price}>${product.price}</Text>
+        <Text style={[styles.price, styles.text]}>${product.price}</Text>
         <View style={styles.buttons}>
           <SmartButton
             onPress={handleMoreDetailsPress}
             style={{ borderWidth: 2 }}
           >
-            <Text>More Details</Text>
+            <Text style={styles.text}>More Details</Text>
           </SmartButton>
           <SmartButton
             onPress={handleAddToCartPress}
@@ -79,7 +83,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.contrast,
+    backgroundColor: Colors.foreground,
     gap: 8,
     padding: 16,
     borderRadius: 8,
@@ -93,6 +97,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     alignSelf: 'center',
+    backgroundColor: 'white',
   },
   row: {
     flexDirection: 'row',
@@ -117,6 +122,9 @@ const styles = StyleSheet.create({
   },
   addToCartText: {
     color: Colors.contrast,
+  },
+  text: {
+    color: Colors.text,
   },
 });
 

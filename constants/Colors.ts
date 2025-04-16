@@ -5,15 +5,15 @@
 
 const blue = '#007BFF';
 const darkGray = '#25292e';
-const white = '#fff';
-const black = '#11181C';
+const white = '#eee';
 
 export const Colors = {
   background: darkGray,
+  foreground: 'darkgray',
   icon: darkGray,
   lowContrast: '#DDD',
   highlight: blue,
-  text: black,
+  text: white,
   contrast: white,
   error: '#FF3B30',
   warning: '#FFD700',
