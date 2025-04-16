@@ -24,9 +24,9 @@ const Cart = () => {
   );
   const [refreshing, setRefreshing] = useState(false);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     cartDispatcher({ type: 'CLEAR_CART' });
-  };
+  }, [cartDispatcher]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
