@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "row",
-    gap: 8
+    gap: 8,
   },
   addToCartText: {
     color: Colors.contrast,

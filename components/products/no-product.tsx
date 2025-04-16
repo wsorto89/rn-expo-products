@@ -13,10 +13,7 @@ const NoProduct = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>No product selected.</Text>
-      <SmartButton
-        onPress={handleGoBack}
-        backgroundColor={Colors.error}
-      >
+      <SmartButton onPress={handleGoBack} backgroundColor={Colors.error}>
         <Text style={styles.text}>Go Back to Product List</Text>
       </SmartButton>
     </View>

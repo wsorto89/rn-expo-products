@@ -11,7 +11,7 @@ const black = "#11181C";
 export const Colors = {
   background: darkGray,
   icon: darkGray,
-  lowContrast: '#DDD',
+  lowContrast: "#DDD",
   highlight: blue,
   text: black,
   contrast: white,

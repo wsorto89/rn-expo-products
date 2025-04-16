@@ -11,7 +11,9 @@ type CartAction =
 
 export const CartStateContext = createContext<CartState | null>(null);
 
-export const CartDispatchContext = createContext<Dispatch<CartAction> | null>(null);
+export const CartDispatchContext = createContext<Dispatch<CartAction> | null>(
+  null
+);
 
 const cartReducer = (state: CartState, action: CartAction) => {
   switch (action.type) {
@@ -85,9 +87,7 @@ export const useCartState = () => {
 export const useCartDispatch = () => {
   const context = useContext(CartDispatchContext);
   if (!context)
-    throw new Error(
-      "useCartDispatch must be used within a CartProvider"
-    );
+    throw new Error("useCartDispatch must be used within a CartProvider");
   return context;
 };
 
@@ -99,4 +99,4 @@ export const useCart = () => {
   const state = useCartState();
   const dispatch = useCartDispatch();
   return { state, dispatch };
-}
+};

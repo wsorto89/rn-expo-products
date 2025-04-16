@@ -21,15 +21,17 @@ jest.mock("expo-router", () => ({
   }),
 }));
 
-const mockProducts: Product[] = [{
-  id: 1,
-  title: "Test Product",
-  description: "This is a test product",
-  category: "Test Category",
-  image: "https://via.placeholder.com/150",
-  price: 100,
-  rating: { rate: 4.5, count: 10 },
-}];
+const mockProducts: Product[] = [
+  {
+    id: 1,
+    title: "Test Product",
+    description: "This is a test product",
+    category: "Test Category",
+    image: "https://via.placeholder.com/150",
+    price: 100,
+    rating: { rate: 4.5, count: 10 },
+  },
+];
 
 const renderWithProviders = (addToCartMock = jest.fn()) =>
   render(

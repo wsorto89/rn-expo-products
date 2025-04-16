@@ -25,10 +25,20 @@ type DrawerContentProps = {
  * @param {ProductFilters} props.filters - The current filters applied to the product list.
  * @param {(filters: ProductFilters) => void} props.setFilters - Function to update the filters.
  */
-const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => {
-  const [minRating, setMinRating] = useState<string>(filters.minRating !== null ? filters.minRating.toString() : "");
-  const [maxPrice, setMaxPrice] = useState<string>(filters.maxPrice !== null ? filters.maxPrice.toString() : "");
-  const [category, setCategory] = useState<string>(filters.category !== null ? filters.category.toString() : "");
+const DrawerContent = ({
+  onClose,
+  filters,
+  setFilters,
+}: DrawerContentProps) => {
+  const [minRating, setMinRating] = useState<string>(
+    filters.minRating !== null ? filters.minRating.toString() : ""
+  );
+  const [maxPrice, setMaxPrice] = useState<string>(
+    filters.maxPrice !== null ? filters.maxPrice.toString() : ""
+  );
+  const [category, setCategory] = useState<string>(
+    filters.category !== null ? filters.category.toString() : ""
+  );
 
   const handleMinRatingChange = (text: string) => {
     const parsedValue = parseFloat(text);
@@ -89,7 +99,7 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
         keyboardType={"numeric"}
         style={styles.input}
       />
-      { /* TODO: Category filter */}
+      {/* TODO: Category filter */}
       <View style={styles.buttons}>
         <SmartButton onPress={handleClearPress} style={styles.cancelButton}>
           <Text>Clear</Text>
