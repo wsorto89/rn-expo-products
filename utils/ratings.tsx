@@ -1,5 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/colors";
+import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '@/constants/colors';
 
 /*
  * The maximum rating value for the stars.
@@ -8,9 +8,10 @@ import { Colors } from "@/constants/colors";
 export const RATING_MAX = 5;
 
 /**
- * Renders a star rating based on the given rating value.
- * @param {number} rating - The rating value (1 to 5).
- * @returns {JSX.Element[]} An array of star elements.
+ * @description Renders a star rating based on the given rating value.
+ * Stars will be colored gold if the rating is less than that number and gray if not.
+ * Only checks whole numbers currently
+ * @param {number} rating - The rating value (1 to 5)
  */
 export function renderStars(rating: number) {
   const starElements = [];
@@ -21,7 +22,7 @@ export function renderStars(rating: number) {
         name="star"
         size={16}
         color={i <= rating ? Colors.warning : Colors.lowContrast}
-      />
+      />,
     );
   }
   return starElements;

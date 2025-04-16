@@ -1,35 +1,52 @@
-import { useRouter } from "expo-router";
-import { Image, StyleSheet, Text, View } from "react-native";
-import SmartButton from "@/components/ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { useProductContext } from "@/context/product-context";
-import { Product } from "@/types";
-import { renderStars } from "@/utils/ratings";
+import * as Clipboard from 'expo-clipboard';
+import { useRouter } from 'expo-router';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import SmartButton from '@/components/ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { Product } from '@/types';
+import { renderStars } from '@/utils/ratings';
+import { useCartDispatch } from '@/context/cart-context';
 
 type ProductCardProps = {
   product: Product;
 };
 
+/**
+ * @description This component displays a product card with its title, image, category, rating, and price.
+ * It also provides buttons for more details and adding the product to the cart.
+ * @param {ProductCardProps} product - The product to display
+ */
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
-  const { setSelectedProduct } = useProductContext();
+  const cartDispatcher = useCartDispatch();
 
   const handleMoreDetailsPress = () => {
-    setSelectedProduct(product);
     router.push(`/products/${product.id}`);
   };
 
   const handleAddToCartPress = () => {
-    // TODO: Handle add to cart logic here
+    cartDispatcher({ type: 'ADD_TO_CART', payload: product });
+  };
+
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(product.title);
   };
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>{product.title}</Text>
+      <Pressable
+        onPress={copyToClipboard}
+        accessibilityLabel={'Hold down to copy'}
+      >
+        <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+          {product.title}
+        </Text>
+      </Pressable>
       <Image
         source={{ uri: product.image }}
         style={styles.image}
-        resizeMode={"contain"}
+        resizeMode={'contain'}
+        accessibilityLabel={product.description}
       />
       <View style={styles.row}>
         <Text>{product.category}</Text>
@@ -41,7 +58,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </View>
       <View style={styles.row}>
         <Text style={styles.price}>${product.price}</Text>
-        <View style={{ flexDirection: "row", gap: 8 }}>
+        <View style={styles.buttons}>
           <SmartButton
             onPress={handleMoreDetailsPress}
             style={{ borderWidth: 2 }}
@@ -52,7 +69,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             onPress={handleAddToCartPress}
             backgroundColor={Colors.highlight}
           >
-            <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
+            <Text style={styles.addToCartText}>Add to Cart</Text>
           </SmartButton>
         </View>
       </View>
@@ -69,30 +86,37 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   image: {
     width: 80,
     height: 80,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   ratings: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
   stars: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   price: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+  },
+  buttons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  addToCartText: {
+    color: Colors.contrast,
   },
 });
 

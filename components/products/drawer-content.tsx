@@ -1,11 +1,13 @@
-import { RATING_MAX } from "@/utils/ratings";
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import SmartButton from "../ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { ProductFilters } from "@/types";
+import { RATING_MAX } from '@/utils/ratings';
+import { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import SmartButton from '../ui/smart-button';
+import { Colors } from '@/constants/colors';
+import { ProductFilters } from '@/types';
 
 const RATING_MIN = 0;
+
+const PRICE_MIN = 0;
 
 type DrawerContentProps = {
   onClose: () => void;
@@ -14,23 +16,32 @@ type DrawerContentProps = {
 };
 
 /**
+ * @description It includes input fields for minimum rating, maximum price, and category.
+ * It also provides buttons to clear and apply the filters.
+ * The component uses local state to manage the input values and updates the filters when the user applies them.
+ * It also handles input validation for the minimum rating and maximum price fields.
  * @param {Object} props - Component props.
  * @param {() => void} props.onClose - Function to close the drawer.
  * @param {ProductFilters} props.filters - The current filters applied to the product list.
  * @param {(filters: ProductFilters) => void} props.setFilters - Function to update the filters.
- * @returns {JSX.Element} - A component that renders the content of the drawer for filtering products.
- * It includes input fields for minimum rating, maximum price, and category.
- * It also provides buttons to clear and apply the filters.
- * The component uses local state to manage the input values and updates the filters when the user applies them.
- * It also handles input validation for the minimum rating and maximum price fields.
  */
-const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => {
-  const [minRating, setMinRating] = useState<string>(filters.minRating !== null ? filters.minRating.toString() : "");
-  const [maxPrice, setMaxPrice] = useState<string>(filters.maxPrice !== null ? filters.maxPrice.toString() : "");
-  const [category, setCategory] = useState<string>(filters.category !== null ? filters.category.toString() : "");
+const DrawerContent = ({
+  onClose,
+  filters,
+  setFilters,
+}: DrawerContentProps) => {
+  const [minRating, setMinRating] = useState<string>(
+    filters.minRating !== null ? filters.minRating.toString() : '',
+  );
+  const [maxPrice, setMaxPrice] = useState<string>(
+    filters.maxPrice !== null ? filters.maxPrice.toString() : '',
+  );
+  const [category, setCategory] = useState<string>(
+    filters.category !== null ? filters.category.toString() : '',
+  );
 
   const handleMinRatingChange = (text: string) => {
-    const parsedValue = parseInt(text);
+    const parsedValue = parseFloat(text);
 
     if (
       !isNaN(parsedValue) &&
@@ -39,29 +50,29 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
     ) {
       setMinRating(text);
     } else {
-      setMinRating("");
+      setMinRating('');
     }
   };
 
   const handleMaxPriceChange = (text: string) => {
-    const parsedValue = parseInt(text);
+    const parsedValue = parseFloat(text);
 
-    if (!isNaN(parsedValue) && parsedValue >= RATING_MIN) {
+    if (!isNaN(parsedValue) && parsedValue >= PRICE_MIN) {
       setMaxPrice(text);
     } else {
-      setMaxPrice("");
+      setMaxPrice('');
     }
   };
 
   const handleClearPress = () => {
-    setMinRating("");
-    setMaxPrice("");
-    setCategory("");
+    setMinRating('');
+    setMaxPrice('');
+    setCategory('');
   };
 
   const handleApplyPress = () => {
-    const parsedMinRating = parseInt(minRating, 10) || null;
-    const parsedMaxPrice = parseInt(maxPrice, 10) || null;
+    const parsedMinRating = parseFloat(minRating) || null;
+    const parsedMaxPrice = parseFloat(maxPrice) || null;
     const parsedCategory = category || null;
     setFilters({
       minRating: parsedMinRating,
@@ -78,17 +89,17 @@ const DrawerContent = ({ onClose, filters, setFilters }: DrawerContentProps) => 
         placeholder="Minimum Rating"
         value={minRating}
         onChangeText={handleMinRatingChange}
-        keyboardType={"numeric"}
+        keyboardType={'numeric'}
         style={styles.input}
       />
       <TextInput
         placeholder="Maximum Price ($)"
         value={maxPrice}
         onChangeText={handleMaxPriceChange}
-        keyboardType={"numeric"}
+        keyboardType={'numeric'}
         style={styles.input}
       />
-      { /* TODO: Category filter */}
+      {/* TODO: Category filter */}
       <View style={styles.buttons}>
         <SmartButton onPress={handleClearPress} style={styles.cancelButton}>
           <Text>Clear</Text>
@@ -112,12 +123,12 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     padding: 8,
   },
   buttons: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     gap: 8,
   },
   cancelButton: {

@@ -1,97 +1,143 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import SmartButton from "@/components/ui/smart-button";
-import { Colors } from "@/constants/colors";
-import { useProductContext } from "@/context/product-context";
-import { renderStars } from "@/utils/ratings";
+import * as Clipboard from 'expo-clipboard';
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { Colors } from '@/constants/colors';
+import { useProductContext } from '@/context/product-context';
+import { renderStars } from '@/utils/ratings';
+import NoProduct from '@/components/products/no-product';
+import { useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
+import ProductItemDetailsFooter from '@/components/products/product-item-details-footer';
 
+/**
+ * @description This component displays the details of a selected product.
+ * It includes the product's title, image, description, category, rating, and price.
+ * It also provides a button to add the product to the cart.
+ */
 const ProductDetails = () => {
-  const { selectedProduct } = useProductContext();
+  const { products } = useProductContext();
+  const params = useLocalSearchParams<{ id: string }>();
+  const productId = params.id;
+  const [isLoading, setIsLoading] = useState(false);
 
-  // This should never happen, but just in case
-  // we don't want to crash the app if the product is not found
-  if (!selectedProduct) {
-    return (
-      <View>
-        <Text>No product selected.</Text>
-      </View>
-    );
+  const currentIndex = products.findIndex(
+    (item) => item.id.toString() === productId,
+  );
+  const curProduct = products[currentIndex];
+
+  // This should never happen on mobile, but just in case
+  // we don't want to crash the app if the product is not found.
+  // This can happen on web by refreshing
+  if (currentIndex === -1) {
+    return <NoProduct />;
   }
 
-  const handleAddToCartPress = () => {
-    // TODO: handle add to cart logic here
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(curProduct.title);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.area}>
-        <Text style={styles.title}>{selectedProduct.title}</Text>
-        <Image
-          source={{ uri: selectedProduct.image }}
-          style={styles.image}
-          resizeMode={"contain"}
-        />
-        <Text>{selectedProduct.description}</Text>
-      </View>
-      <View style={styles.area}>
-        <View style={styles.row}>
-          <Text>{selectedProduct.category}</Text>
-          <View style={styles.ratings}>
-            <Text>{selectedProduct.rating.rate}</Text>
-            <View style={styles.stars}>
-              {renderStars(selectedProduct.rating.rate)}
+    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      {isLoading ? (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator color={Colors.highlight} size={72} />
+        </View>
+      ) : (
+        <>
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={{
+              padding: 16,
+            }}
+          >
+            <View style={styles.area}>
+              <Pressable
+                onPress={copyToClipboard}
+                accessibilityLabel={'Hold down to copy'}
+              >
+                <Text style={styles.title}>{curProduct.title}</Text>
+              </Pressable>
+              <Image
+                source={{ uri: curProduct.image }}
+                style={styles.image}
+                resizeMode={'contain'}
+              />
+              <Text>{curProduct.description}</Text>
             </View>
-            <Text>({selectedProduct.rating.count})</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.price}>${selectedProduct.price}</Text>
-          <View style={{ flexDirection: "row", gap: 8 }}>
-            <SmartButton onPress={handleAddToCartPress} backgroundColor={Colors.highlight}>
-              <Text style={{ color: Colors.contrast }}>Add to Cart</Text>
-            </SmartButton>
-          </View>
-        </View>
-      </View>
+            <View style={styles.area}>
+              <View style={styles.row}>
+                <Text style={styles.category}>{curProduct.category}</Text>
+                <View style={styles.ratings}>
+                  <Text>{curProduct.rating.rate}</Text>
+                  <View style={styles.stars}>
+                    {renderStars(curProduct.rating.rate)}
+                  </View>
+                  <Text>({curProduct.rating.count})</Text>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+          <ProductItemDetailsFooter
+            curProduct={curProduct}
+            index={currentIndex}
+            setIsLoading={setIsLoading}
+          />
+        </>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  loadingOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+  },
   container: {
     backgroundColor: Colors.contrast,
-    padding: 16,
     flex: 1,
-    justifyContent: "space-between",
   },
   area: {
     gap: 16,
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   image: {
     width: 240,
     height: 240,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  category: {
+    fontWeight: 'bold',
   },
   ratings: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
   stars: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   price: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 
