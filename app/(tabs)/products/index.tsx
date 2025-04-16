@@ -1,22 +1,21 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { Drawer } from "react-native-drawer-layout";
 import DrawerContent from "@/components/products/drawer-content";
 import ProductCard from "@/components/products/product-card";
-import SmartButton from "@/components/ui/smart-button";
 import { Colors } from "@/constants/colors";
 import useDebounce from "@/hooks/use-debounce";
-import { ProductFilters } from "@/types";
-import BadgeContainer from "@/components/ui/badge-container";
+import { Product, ProductFilters } from "@/types";
 import { useProductContext } from "@/context/product-context";
+import { filterProducts } from "@/utils";
+import ProductListFilters from "@/components/products/product-list-filters";
+import useFetch from "@/hooks/use-fetch";
 
 /**
  * @description It fetches product data from an API, allows users to search and filter products,
@@ -25,8 +24,6 @@ import { useProductContext } from "@/context/product-context";
  */
 const ProductList = () => {
   const { products, setProducts } = useProductContext();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [filterText, setFilterText] = useState("");
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState<ProductFilters>({
@@ -34,6 +31,16 @@ const ProductList = () => {
     maxPrice: null,
     category: null,
   });
+
+  const { error, isLoading, data } = useFetch<Product[]>(
+    "https://fakestoreapi.com/products"
+  );
+
+  useEffect(() => {
+    if (data) {
+      setProducts(data);
+    }
+  }, [data]);
 
   // Using a custom hook to debounce the filter text input
   // This helps to reduce the number of re-renders
@@ -47,52 +54,9 @@ const ProductList = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch("https://fakestoreapi.com/products", {
-          signal,
-        });
-        if (!response.ok) {
-          throw new Error(
-            `Network response failed with status: ${response.statusText}`
-          );
-        }
-        const data = await response.json();
-        setProducts(data)
-      } catch (error) {
-        if (error instanceof Error && error.name !== "AbortError") {
-          setError(error.message);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProducts();
-    return () => {
-      // Cleanup function to abort the fetch request if the component unmounts
-      abortController.abort();
-    };
-  }, []);
-
-  // Filter products based on the filter text
   // Using useMemo to optimize performance by memoizing the filtered products
   const filteredProducts = useMemo(
-    () =>
-      products.filter(
-        (product) =>
-          product.title
-            .toLowerCase()
-            .includes(debouncedFilterText.toLowerCase()) &&
-          (filters.minRating === null ||
-            product.rating.rate >= filters.minRating) &&
-          (filters.maxPrice === null || product.price <= filters.maxPrice) &&
-          (filters.category === null ||
-            product.category.toLowerCase() === filters.category.toLowerCase())
-      ),
+    () => filterProducts(products, debouncedFilterText, filters),
     [products, debouncedFilterText, filters]
   );
 
@@ -129,26 +93,12 @@ const ProductList = () => {
         )}
         {products.length > 0 && !isLoading && !error && (
           <>
-            <View style={styles.row}>
-              <TextInput
-                value={filterText}
-                onChangeText={setFilterText}
-                placeholder={"Search products..."}
-                style={styles.textFilter}
-              />
-              <BadgeContainer
-                count={filterCount}
-                containerStyles={{ marginRight: 8 }}
-              >
-                <SmartButton
-                  onPress={handleOpenDrawer}
-                  backgroundColor={Colors.contrast}
-                  accessibilityLabel={"filter"}
-                >
-                  <Ionicons name="filter" size={32} color={Colors.icon} />
-                </SmartButton>
-              </BadgeContainer>
-            </View>
+            <ProductListFilters
+              filterText={filterText}
+              setFilterText={setFilterText}
+              handleOpenDrawer={handleOpenDrawer}
+              filterCount={filterCount}
+            />
             {filteredProducts.length > 0 ? (
               <FlatList
                 keyExtractor={(item) => item.id.toString()}
@@ -183,18 +133,6 @@ const styles = StyleSheet.create({
   error: {
     color: Colors.error,
     fontSize: 16,
-  },
-  row: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  textFilter: {
-    borderWidth: 2,
-    borderRadius: 4,
-    paddingLeft: 8,
-    backgroundColor: Colors.contrast,
-    flex: 1,
-    marginLeft: 12,
   },
   emptyList: {
     color: Colors.contrast,
