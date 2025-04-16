@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "dev": "set APP_VARIANT=development && npx expo start",
+    "dev": "APP_VARIANT=development && npx expo start",
+    "dev:win": "set APP_VARIANT=development && npx expo start",
     "coverage": "npx jest --coverage",
     "format": "prettier"
   },
