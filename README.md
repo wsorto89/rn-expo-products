@@ -24,4 +24,12 @@ I handled errors gracefully across the app. I added gestures for going
 to the next product in the list in the footer of the product details
 page and to clear the cart. I made the product's title be copyable. I used a split
 context for the cart in order to prevent unnecessary re-renders. I
-used the useMemo and useCallback hooks to optimize some components. I wrote unit and integration tests. Lastly, I added github workflows to run on each PR into the main branch and github labels to create a build.
+used the useMemo and useCallback hooks to optimize some components. I wrote unit and integration tests. Lastly, I added github workflows to run on each PR into the main branch and github labels to create builds in expo.
+
+![part1](https://media.giphy.com/media/mm0ORus5kALFfZGpqN/giphy.gif)
+
+![part2](https://media.giphy.com/media/uXLdU9ApfnzcnPaS3l/giphy.gif)
+
+![part3](https://media.giphy.com/media/xoLDQQHaSlV0wi72BK/giphy.gif)
+
+![part4](https://media.giphy.com/media/Qxp9eHkRrcraHUerFs/giphy.gif)
