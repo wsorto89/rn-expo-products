@@ -31,6 +31,7 @@ const ProductListFilters = ({
         value={filterText}
         onChangeText={setFilterText}
         placeholder={'Search products...'}
+        placeholderTextColor={Colors.text}
         style={styles.textFilter}
       />
       <BadgeContainer count={filterCount} containerStyles={{ marginRight: 8 }}>
