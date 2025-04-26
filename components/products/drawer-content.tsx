@@ -86,7 +86,7 @@ const DrawerContent = ({
     <View style={styles.container}>
       <Text style={styles.text}>Filters</Text>
       <TextInput
-        placeholder={"Minimum Rating"}
+        placeholder={'Minimum Rating'}
         placeholderTextColor={Colors.text}
         value={minRating}
         onChangeText={handleMinRatingChange}
@@ -94,7 +94,7 @@ const DrawerContent = ({
         style={[styles.input, styles.text]}
       />
       <TextInput
-        placeholder={"Maximum Price ($)"}
+        placeholder={'Maximum Price ($)'}
         placeholderTextColor={Colors.text}
         value={maxPrice}
         onChangeText={handleMaxPriceChange}
