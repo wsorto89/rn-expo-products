@@ -31,17 +31,3 @@ jobs:
         with:
           name: coverage-report
           path: coverage/lcov-report/
-
-      - name: Jest Coverage Comment
-        uses: MishaKav/jest-coverage-comment@main
-        if: (success() || failure()) && github.event_name == 'pull_request'
-        with:
-          coverage-summary-path: ./coverage/coverage-final.json
-          summary-title: '💯 Test Coverage'
-          badge-title: Coverage
-          create-new-comment: false
-          junitxml-title: 😎 Tests Results
-          junitxml-path: ./coverage/clover.xml
-          coverage-title: 👀 Tests Details
-          coverage-path: ./coverage/lcov.info
-          report-only-changed-files: true
