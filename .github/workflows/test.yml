@@ -36,8 +36,16 @@ jobs:
           name: coverage-report
           path: coverage/lcov-report/
 
-      - name: Report coverage to PR
-        if: always()
-        uses: romeovs/lcov-reporter-action@v0.3.1
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
+        if: (success() || failure()) && github.event_name == 'pull_request'
         with:
-          lcov-file: coverage/lcov.info
+          coverage-summary-path: ./coverage/coverage-summary.json
+          summary-title: '💯 Test Coverage'
+          badge-title: Coverage
+          create-new-comment: false
+          junitxml-title: 😎 Tests Results
+          junitxml-path: ./coverage/jest-junit.xml
+          coverage-title: 👀 Tests Details
+          coverage-path: ./coverage/coverage.txt
+          report-only-changed-files: true
