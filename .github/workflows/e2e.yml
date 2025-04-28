@@ -47,16 +47,7 @@ jobs:
       - name: Install Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Cache Android Emulator System Images
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.android/avd
-            ~/.android/adb*
-            /usr/local/lib/android/sdk/system-images
-          key: android-emulator-${{ runner.os }}-api-30
-
-      - name: Start Android Emulator and Run Tests
+      - name: Start Android Emulator, Install APK, Run Maestro Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -64,8 +55,10 @@ jobs:
           arch: x86_64
           profile: pixel_5
           disable-animations: true
-          emulator-options: -no-window -no-audio -no-boot-anim -no-snapshot-save -no-snapshot-load -accel off
+          emulator-options: -no-window -no-audio -no-boot-anim -no-snapshot-save -no-snapshot-load -accel on
           script: |
             adb wait-for-device
+            sleep 30
+            adb devices
             adb install dev-app.apk
             maestro test .maestro
