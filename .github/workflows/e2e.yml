@@ -46,7 +46,7 @@ jobs:
       - name: Set up Android Emulator
         run: |
           echo "y" | sdkmanager "system-images;android-30;google_apis;x86_64"
-          avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" --force
+          echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" --force
           nohup emulator -avd test -no-window -no-audio -no-boot-anim &
           adb wait-for-device
           adb shell input keyevent 82 &
