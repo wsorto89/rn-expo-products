@@ -38,8 +38,14 @@ jobs:
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
+      - name: Install Android SDK and Set Environment Variables
+        uses: android-actions/setup-android@v3
+
       - name: Run Maestro Tests (without Emulator)
         run: |
-          # Install dependencies needed for running tests
+          # Check if adb is available
+          adb version
+          # Install the APK
           adb install dev-app.apk
+          # Run the Maestro tests
           maestro test .maestro
