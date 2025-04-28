@@ -1,0 +1,65 @@
+name: Build APK, Upload, Run Maestro Tests
+
+on: [push, pull_request]
+
+jobs:
+  maestro-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Expo CLI
+        run: npm install -g expo-cli eas-cli
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build development APK
+        run: eas build -p android --profile development --local --output=dev-app.apk
+
+      - name: Upload APK to GitHub Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-app
+          path: dev-app.apk
+
+      - name: Set up Java (for Android SDK)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Android Emulator
+        run: |
+          echo "y" | sdkmanager "system-images;android-30;google_apis;x86_64"
+          avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" --force
+          nohup emulator -avd test -no-window -no-audio -no-boot-anim &
+          adb wait-for-device
+          adb shell input keyevent 82 &
+
+      - name: Install Maestro CLI
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Download Dev APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dev-app
+
+      - name: Install APK to Emulator
+        run: adb install dev-app.apk
+
+      - name: Run Maestro Tests
+        run: maestro test .maestro/
