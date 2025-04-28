@@ -61,4 +61,5 @@ jobs:
             sleep 30
             adb devices
             adb install dev-app.apk
-            maestro test .maestro
+            ls -R .maestro
+            maestro test .maestro/
