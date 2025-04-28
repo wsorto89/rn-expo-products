@@ -1,0 +1,10 @@
+appId: com.wsorto89.productlistapp.dev
+---
+- launchApp
+- tapOn: 'Products'
+- tapOn:
+    index: 0
+- tapOn: 'Add to Cart'
+- tapOn: 'Cart'
+- assertVisible:
+    text: 'Total Item(s): 1, Total Cost: $109.95'
