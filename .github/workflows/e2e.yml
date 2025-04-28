@@ -16,16 +16,15 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Expo CLI
+      - name: Install Expo and EAS CLI
         run: npm install -g expo-cli eas-cli
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Set Expo token
-        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
-
       - name: Build development APK
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas build -p android --profile development --local --output=dev-app.apk
 
       - name: Upload APK to GitHub Artifact
@@ -43,7 +42,21 @@ jobs:
       - name: Install Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Start Android Emulator and Run Tests
+      - name: Cache Android Emulator System Images
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.android/avd
+            ~/.android/adb*
+            /usr/local/lib/android/sdk/system-images
+          key: android-emulator-${{ runner.os }}-api-30
+
+      - name: Install Maestro CLI
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Start Android Emulator and Run Maestro Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
@@ -51,6 +64,8 @@ jobs:
           arch: x86_64
           profile: pixel_5
           disable-animations: true
+          emulator-options: -no-window -no-audio -no-boot-anim -no-snapshot-save -no-snapshot-load -accel off
           script: |
+            adb wait-for-device
             adb install dev-app.apk
-            ~/.maestro/bin/maestro test .maestro
+            maestro test .maestro
