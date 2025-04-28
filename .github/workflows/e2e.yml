@@ -43,26 +43,14 @@ jobs:
       - name: Install Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Set up Android Emulator
-        run: |
-          echo "y" | sdkmanager "system-images;android-30;google_apis;x86_64"
-          echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" --force
-          nohup emulator -avd test -no-window -no-audio -no-boot-anim &
-          adb wait-for-device
-          adb shell input keyevent 82 &
-
-      - name: Install Maestro CLI
-        run: |
-          curl -Ls "https://get.maestro.mobile.dev" | bash
-          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
-
-      - name: Download Dev APK Artifact
-        uses: actions/download-artifact@v4
+      - name: Start Android Emulator and Run Tests
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          name: dev-app
-
-      - name: Install APK to Emulator
-        run: adb install dev-app.apk
-
-      - name: Run Maestro Tests
-        run: maestro test .maestro/
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          disable-animations: true
+          script: |
+            adb install dev-app.apk
+            ~/.maestro/bin/maestro test .maestro
