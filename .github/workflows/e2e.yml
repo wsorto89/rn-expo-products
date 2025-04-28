@@ -33,39 +33,13 @@ jobs:
           name: dev-app
           path: dev-app.apk
 
-      - name: Set up Java (for Android SDK)
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Install Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Cache Android Emulator System Images
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.android/avd
-            ~/.android/adb*
-            /usr/local/lib/android/sdk/system-images
-          key: android-emulator-${{ runner.os }}-api-30
-
       - name: Install Maestro CLI
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
-      - name: Start Android Emulator and Run Maestro Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 30
-          target: google_apis
-          arch: x86_64
-          profile: pixel_5
-          disable-animations: true
-          emulator-options: -no-window -no-audio -no-boot-anim -no-snapshot-save -no-snapshot-load -accel off
-          script: |
-            adb wait-for-device
-            adb install dev-app.apk
-            maestro test .maestro
+      - name: Run Maestro Tests (without Emulator)
+        run: |
+          # Install dependencies needed for running tests
+          adb install dev-app.apk
+          maestro test .maestro
