@@ -25,7 +25,7 @@ jobs:
       - name: Build development APK
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build -p android --profile development --local --output=dev-app.apk
+        run: eas build -p android --profile development-sim --local --output=dev-app.apk
 
       - name: Upload APK to GitHub Artifact
         uses: actions/upload-artifact@v4
@@ -63,3 +63,6 @@ jobs:
             adb install dev-app.apk
             ls -R .maestro
             maestro test .maestro/
+      - name: Terminate Emulator
+        run: adb -s emulator-5554 emu kill
+        continue-on-error: true
