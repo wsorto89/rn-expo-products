@@ -1,68 +1,113 @@
-name: Build APK, Upload, Run Maestro Tests
+name: E2E Tests Android (Maestro + Github Action)
 
-on: [pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
 
 jobs:
-  maestro-test:
+  generate-test-apk:
+    if: github.event_name != 'pull_request' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'android-test-github'))
+    name: Generate Test APK (Gradle)
     runs-on: ubuntu-latest
-    timeout-minutes: 40
 
     steps:
-      - name: Checkout repository
+      - name: 📦 Checkout project repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
+  
       - name: Install Expo and EAS CLI
         run: npm install -g expo-cli eas-cli
-
+  
       - name: Install dependencies
         run: npm ci
 
-      - name: Build development APK
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build -p android --profile development-sim --local --output=dev-app.apk
-
-      - name: Upload APK to GitHub Artifact
-        uses: actions/upload-artifact@v4
+      - name: 📦 Set Up JDK + Generate Test APK
+        uses: ./.github/actions/setup-jdk-generate-apk
         with:
-          name: dev-app
-          path: dev-app.apk
+          APP_ENV: development
 
-      - name: Install Maestro CLI
-        run: |
-          curl -Ls "https://get.maestro.mobile.dev" | bash
-          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
-
-      - name: Set up Java (for Android SDK)
-        uses: actions/setup-java@v3
+      - name: Upload Test APK
+        uses: actions/upload-artifact@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          name: test-apk
+          path: ./android/app/build/outputs/apk/release/app-release.apk
 
-      - name: Install Android SDK
-        uses: android-actions/setup-android@v3
+  test-android:
+    name: Run Android E2E Tests (Maestro + Github Action)
+    needs: generate-test-apk
+    runs-on: macOS-latest
 
-      - name: Start Android Emulator, Install APK, Run Maestro Tests
+    steps:
+      - name: 📦 Checkout project repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Install Maestro
+        run: npm run install-maestro ## We use npm because we don't need to install deps again
+
+      - name: Download Test APK
+        uses: actions/download-artifact@v3
+        with:
+          name: test-apk
+          path: ${{ github.workspace }}
+
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: AVD cache
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-cache
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
-          target: google_apis
-          arch: x86_64
-          profile: pixel_5
-          disable-animations: true
-          emulator-options: -no-window -no-audio -no-boot-anim -no-snapshot-save -no-snapshot-load -accel on
+          api-level: 29
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          cores: 2
+          ram-size: 4096M
+          profile: Nexus 6
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run tests with Maestro
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          cores: 2
+          ram-size: 4096M
+          profile: Nexus 6
           script: |
-            adb wait-for-device
-            sleep 30
-            adb devices
-            adb install dev-app.apk
-            ls -R .maestro
-            maestro test .maestro/
-      - name: Terminate Emulator
-        run: adb -s emulator-5554 emu kill
-        continue-on-error: true
+            adb install "${{ github.workspace }}/app-release.apk"
+            $HOME/.maestro/bin/maestro test .maestro/ --env=APP_ID=com.obytes.staging  --format junit
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e-test-logs
+          path: ~/.maestro/tests/**/*
+
+      - name: Store tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e_android_report
+          path: |
+            report.xml
