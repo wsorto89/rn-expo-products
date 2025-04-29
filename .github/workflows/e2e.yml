@@ -53,7 +53,7 @@ jobs:
         run: npm run install-maestro ## We use npm because we don't need to install deps again
 
       - name: Download Test APK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-apk
           path: ${{ github.workspace }}
@@ -97,16 +97,16 @@ jobs:
             adb install "${{ github.workspace }}/app-release.apk"
             $HOME/.maestro/bin/maestro test .maestro/ --env=APP_ID=com.obytes.staging  --format junit
 
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-test-logs
-          path: ~/.maestro/tests/**/*
+      # - name: Upload artifacts
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: e2e-test-logs
+      #     path: ~/.maestro/tests/**/*
 
-      - name: Store tests result
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e_android_report
-          path: |
-            report.xml
+      # - name: Store tests result
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: e2e_android_report
+      #     path: |
+      #       report.xml
